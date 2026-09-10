@@ -644,6 +644,14 @@ else{
   },{passive:true,once:true});
 }
 
+// diagnóstico: ?off=depth,motes,bg,noise,waves,term desliga camadas para isolar artefatos
+{const off=new URLSearchParams(location.search).get('off');
+ if(off)off.split(',').forEach(k=>{
+   const sel={depth:'.depth',motes:'.motes',bg:'.bg',noise:'.noise',waves:'.waves',term:'.term',
+              deep:'.deep-art',prog:'.prog'}[k.trim()];
+   if(sel)document.querySelectorAll(sel).forEach(e=>e.style.display='none');
+ });}
+
 const hdr=document.getElementById('hdr'),prog=document.getElementById('prog'),depthEl=document.getElementById('depth');
 let tick=false,maxScroll=1;
 const measure=()=>{maxScroll=Math.max(document.documentElement.scrollHeight-innerHeight,1)};
