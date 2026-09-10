@@ -379,6 +379,10 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px}
   .mob a{font-size:23px}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.lite *{animation:none!important}
+.lite .motes,.lite .bubbles,.lite .noise{display:none}
+.lite header.on{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(4,6,12,.96)}
+.lite .deep-layer,.lite .drift{transform:none!important}
 </style>
 </head>
 <body>
@@ -611,6 +615,23 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px}
 </div></footer>
 
 <script>
+const root=document.documentElement;
+let LITE=(navigator.hardwareConcurrency||8)<=4||(navigator.deviceMemory||8)<=4;
+if(LITE)root.classList.add('lite');
+else{
+  let slow=0,seen=0,last=0,until=0;
+  const probe=t=>{
+    if(last){seen++;if(t-last>40)slow++}
+    last=t;
+    if(slow>=10){LITE=true;root.classList.add('lite');return}
+    if(seen<400&&t<until)requestAnimationFrame(probe);
+  };
+  addEventListener('scroll',function once(){
+    removeEventListener('scroll',once);
+    until=performance.now()+6000;last=0;requestAnimationFrame(probe);
+  },{passive:true,once:true});
+}
+
 const hdr=document.getElementById('hdr'),prog=document.getElementById('prog');
 let tick=false,maxScroll=1;
 const measure=()=>{maxScroll=Math.max(document.documentElement.scrollHeight-innerHeight,1)};
@@ -666,19 +687,28 @@ if(matchMedia('(pointer:fine)').matches){
   },{passive:true});
 }
 
-const pars=[...document.querySelectorAll('[data-par]')];
+const pars=[...document.querySelectorAll('[data-par]')].map(el=>({
+  el,k:parseFloat(el.dataset.par)||0,fixed:getComputedStyle(el).position==='fixed',mid:0
+}));
 if(pars.length&&!matchMedia('(prefers-reduced-motion:reduce)').matches){
   let pq=false;
+  const remeasure=()=>{
+    pars.forEach(o=>{o.el.style.transform='none'});
+    pars.forEach(o=>{const r=o.el.getBoundingClientRect();o.mid=r.top+scrollY+r.height/2});
+    move();
+  };
   const move=()=>{
-    const mid=innerHeight/2;
-    pars.forEach(el=>{
-      const r=el.getBoundingClientRect(),k=parseFloat(el.dataset.par)||0;
-      el.style.transform='translate3d(0,'+((mid-(r.top+r.height/2))*k).toFixed(1)+'px,0)';
+    if(LITE){pq=false;return}
+    const mid=innerHeight/2,sy=scrollY;
+    pars.forEach(o=>{
+      const y=o.fixed?sy*o.k:(mid-(o.mid-sy))*o.k;
+      o.el.style.transform='translate3d(0,'+y.toFixed(1)+'px,0)';
     });
     pq=false;
   };
   addEventListener('scroll',()=>{if(!pq){pq=true;requestAnimationFrame(move)}},{passive:true});
-  addEventListener('resize',move,{passive:true});move();
+  addEventListener('resize',remeasure,{passive:true});
+  addEventListener('load',remeasure);remeasure();
 }
 
 const deep=document.querySelector('.deep'),deepArt=document.getElementById('deepArt'),
@@ -686,6 +716,7 @@ const deep=document.querySelector('.deep'),deepArt=document.getElementById('deep
 if(deep&&deepArt){
   let mx=0,my=0,sy=0,queued=false,fine=matchMedia('(pointer:fine)').matches;
   const paint=()=>{
+    if(LITE){queued=false;return}
     deepArt.style.transform='translate3d('+(-mx*30)+'px,'+(-my*20+sy*.6)+'px,0)'+
       ' rotateY('+(-mx*2.4)+'deg) rotateX('+(my*1.7)+'deg)';
     drifts.forEach(d=>{const k=+d.dataset.depth||14;
