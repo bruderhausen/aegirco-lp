@@ -36,7 +36,7 @@ h1,h2,h3{font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.04;lette
 .wrap{width:100%;max-width:var(--max);margin:0 auto;padding:0 24px}
 
 /* ── aurora boreal + ambiente ─────────────── */
-.bg{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none}
+.bg{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none;transform:translateZ(0)}
 .beam{position:absolute;left:-30vw;width:160vw;height:70vh;opacity:.55;will-change:transform;
   contain:strict}
 .b1{top:-24vh;background:radial-gradient(60% 50% at 30% 50%,rgba(31,107,255,.42),transparent 70%),
@@ -48,10 +48,10 @@ h1,h2,h3{font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.04;lette
 @keyframes sway{0%,100%{transform:translate3d(-4vw,0,0)}50%{transform:translate3d(5vw,3vh,0)}}
 .grid-bg{position:fixed;inset:0;z-index:-1;pointer-events:none;
   background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
-  background-size:68px 68px;opacity:.55;
+  background-size:68px 68px;opacity:.55;transform:translateZ(0);
   -webkit-mask-image:radial-gradient(ellipse 78% 58% at 50% 0%,#000 8%,transparent 76%);
   mask-image:radial-gradient(ellipse 78% 58% at 50% 0%,#000 8%,transparent 76%)}
-.noise{position:fixed;inset:0;z-index:998;pointer-events:none;opacity:.04;mix-blend-mode:overlay;
+.noise{position:fixed;inset:0;z-index:998;pointer-events:none;opacity:.03;transform:translateZ(0);
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
 .glow{position:fixed;top:0;left:0;width:520px;height:520px;margin:-260px 0 0 -260px;border-radius:50%;
   pointer-events:none;z-index:-1;opacity:0;will-change:transform;
@@ -61,7 +61,7 @@ h1,h2,h3{font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.04;lette
 
 /* ── nav ──────────────────────────────────── */
 header{position:fixed;top:0;left:0;right:0;z-index:100;transition:.5s var(--ease)}
-header.on{backdrop-filter:blur(14px);background:rgba(4,6,12,.86);border-bottom:1px solid var(--line)}
+header.on{backdrop-filter:blur(10px);background:rgba(4,6,12,.86);border-bottom:1px solid var(--line)}
 nav{display:flex;align-items:center;justify-content:space-between;height:80px;transition:.5s var(--ease)}
 header.on nav{height:64px}
 .brand{display:flex;align-items:center;gap:12px}
@@ -124,11 +124,15 @@ h1 em{font-style:normal;background:linear-gradient(100deg,#fff 6%,#a9ccff 38%,#1
 .stat span{font-family:var(--mono);font-size:10.5px;color:var(--txt-3);letter-spacing:.1em;text-transform:uppercase}
 
 /* ── ondas ────────────────────────────────── */
-.waves{position:relative;height:110px;overflow:hidden;margin-top:-40px}
+.waves{position:relative;height:110px;overflow:hidden;margin-top:-40px;contain:strict}
 .waves svg{position:absolute;top:0;left:0;width:200%;height:100%;fill:none;stroke-width:1;will-change:transform}
 .waves .s1{stroke:rgba(74,155,255,.28);animation:tide 26s linear infinite}
 .waves .s2{stroke:rgba(37,208,192,.14);animation:tide 40s linear infinite}
 @keyframes tide{to{transform:translateX(-50%)}}
+.idle,.idle *{animation-play-state:paused!important}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;
+    transition-duration:.01ms!important;scroll-behavior:auto!important}}
 
 /* ── seções ───────────────────────────────── */
 section{padding:118px 0;position:relative;contain:layout style}
@@ -140,27 +144,32 @@ h2{font-size:clamp(1.95rem,3.9vw,3rem);margin-bottom:18px}
 .head{margin-bottom:56px}
 
 /* lore — imersão submarina */
-#lore{padding:0;position:relative;background:var(--bg)}
-.deep{position:relative;min-height:min(100svh,940px);overflow:hidden;isolation:isolate;background:var(--bg);
-  perspective:1200px}
-.deep-art{position:absolute;inset:-3%;z-index:-3;transition:transform .6s var(--ease)}
+#lore{padding:0;position:relative}
+.deep{position:relative;min-height:min(100svh,940px);overflow:hidden;isolation:isolate}
+.deep-art{position:absolute;inset:0;z-index:-3;overflow:hidden;contain:paint;
+  --deep-fade:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.04) 10%,rgba(0,0,0,.18) 17%,
+    rgba(0,0,0,.42) 24%,rgba(0,0,0,.68) 31%,rgba(0,0,0,.88) 38%,#000 45%,#000 56%,
+    rgba(0,0,0,.88) 63%,rgba(0,0,0,.68) 70%,rgba(0,0,0,.42) 77%,rgba(0,0,0,.18) 84%,
+    rgba(0,0,0,.04) 91%,transparent 100%);
+  -webkit-mask-image:var(--deep-fade);mask-image:var(--deep-fade)}
+.deep-layer{position:absolute;inset:-4%;will-change:transform}
 .deep-art picture{display:block;width:100%;height:100%}
 .deep-art img{width:100%;height:100%;object-fit:cover;object-position:50% 42%;transform:scale(1.06)}
 
 .deep::before{content:'';position:absolute;inset:0;z-index:-2;pointer-events:none;
-  background:linear-gradient(180deg,var(--bg) 0%,rgba(3,7,14,.94) 5%,rgba(3,7,14,.6) 12%,rgba(3,10,20,.16) 30%,
-    rgba(3,9,18,.3) 62%,rgba(3,7,14,.68) 86%,rgba(3,7,14,.95) 95%,var(--bg) 100%)}
+  background:linear-gradient(180deg,transparent 0%,transparent 26%,rgba(3,7,14,.22) 46%,
+    rgba(3,7,14,.24) 62%,transparent 88%,transparent 100%)}
 .deep::after{content:'';position:absolute;inset:0;z-index:-2;pointer-events:none;
   background:radial-gradient(72% 55% at 50% 4%,rgba(150,205,225,.13),transparent 64%)}
-.bubbles{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.bubbles{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;contain:strict}
 .bubbles i{position:absolute;bottom:-40px;border-radius:50%;background:radial-gradient(circle at 32% 28%,
   rgba(255,255,255,.55),rgba(180,220,235,.16) 46%,rgba(255,255,255,.05) 70%);
   border:1px solid rgba(210,235,245,.18);animation:rise linear infinite}
 @keyframes rise{0%{transform:translate3d(0,0,0) scale(.8);opacity:0}
   14%{opacity:.75}72%{opacity:.45}100%{transform:translate3d(26px,-104svh,0) scale(1.2);opacity:0}}
-.deep-stage{position:relative;z-index:1;height:min(100svh,940px);transform-style:preserve-3d}
+.deep-stage{position:relative;z-index:1;height:min(100svh,940px)}
 .deep-stage .wrap{position:relative;height:100%}
-.drift{position:absolute;will-change:transform;transition:transform .7s var(--ease)}
+.drift{position:absolute;will-change:transform}
 .rune-row{top:16%;left:24px;display:flex;gap:18px;align-items:flex-end}
 .rune-row svg{width:26px;height:28px;stroke:#a8dcee;fill:none;stroke-width:1.2;opacity:.72;
   filter:drop-shadow(0 2px 14px rgba(0,0,0,.85))}
@@ -279,8 +288,6 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px}
   .pane-b .eyebrow{flex-direction:row}
   .pane-b .eyebrow::before{background:linear-gradient(90deg,#a8dcee,transparent)}
   .pane .punch,.pane-a .punch{border-right:none;border-left:2px solid #a8dcee;padding:0 0 0 16px}
-  .deep-art{-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 18%,#000 80%,transparent 100%);
-    mask-image:linear-gradient(180deg,transparent 0,#000 18%,#000 80%,transparent 100%)}
   .deep-cap{display:none}
   .hero{min-height:auto;padding:120px 0 80px}
   .hero-grid,#servicos .cards{grid-template-columns:1fr;gap:44px}
@@ -407,11 +414,13 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px}
 </div>
 
 <section id="lore"><div class="deep">
-  <div class="deep-art" id="deepArt" aria-hidden="true">
+  <div class="deep-art" aria-hidden="true">
+    <div class="deep-layer" id="deepArt">
     <picture>
       <source media="(max-width:700px)" srcset="assets/aegir-deep-sm.webp">
       <img src="assets/aegir-deep.webp" alt="" width="1698" height="926" loading="lazy" decoding="async">
     </picture>
+    </div>
   </div>
   <div class="bubbles" aria-hidden="true">
     <i style="left:5%;width:6px;height:6px;animation-duration:19s;animation-delay:-2s"></i>
@@ -581,12 +590,14 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px}
 
 <script>
 const hdr=document.getElementById('hdr'),prog=document.getElementById('prog');
-let tick=false;
+let tick=false,maxScroll=1;
+const measure=()=>{maxScroll=Math.max(document.documentElement.scrollHeight-innerHeight,1)};
+measure();addEventListener('resize',measure,{passive:true});addEventListener('load',measure);
 addEventListener('scroll',()=>{
   if(tick)return;tick=true;
   requestAnimationFrame(()=>{
     hdr.classList.toggle('on',scrollY>24);
-    prog.style.transform='scaleX('+(scrollY/(document.documentElement.scrollHeight-innerHeight))+')';
+    prog.style.transform='scaleX('+(scrollY/maxScroll)+')';
     tick=false;
   });
 },{passive:true});
@@ -602,11 +613,21 @@ const io=new IntersectionObserver(es=>es.forEach((e,i)=>{
 }),{threshold:.12,rootMargin:'0px 0px -8%'});
 document.querySelectorAll('.rv').forEach(e=>io.observe(e));
 
-document.querySelectorAll('.card').forEach(c=>c.addEventListener('pointermove',e=>{
-  const r=c.getBoundingClientRect();
-  c.style.setProperty('--mx',(e.clientX-r.left)+'px');
-  c.style.setProperty('--my',(e.clientY-r.top)+'px');
-}));
+document.querySelectorAll('.card').forEach(c=>{
+  let cr=null,cx=0,cy=0,cq=false;
+  c.addEventListener('pointerenter',()=>{cr=c.getBoundingClientRect()},{passive:true});
+  c.addEventListener('pointermove',e=>{
+    if(!cr)cr=c.getBoundingClientRect();
+    cx=e.clientX;cy=e.clientY;
+    if(cq)return;cq=true;
+    requestAnimationFrame(()=>{
+      c.style.setProperty('--mx',(cx-cr.left)+'px');
+      c.style.setProperty('--my',(cy-cr.top)+'px');
+      cq=false;
+    });
+  },{passive:true});
+  c.addEventListener('pointerleave',()=>{cr=null},{passive:true});
+});
 
 const mk=document.getElementById('mk'),glow=document.getElementById('glow');
 if(matchMedia('(pointer:fine)').matches){
@@ -628,7 +649,7 @@ const deep=document.querySelector('.deep'),deepArt=document.getElementById('deep
 if(deep&&deepArt){
   let mx=0,my=0,sy=0,queued=false,fine=matchMedia('(pointer:fine)').matches;
   const paint=()=>{
-    deepArt.style.transform='translate3d('+(-mx*26)+'px,'+(sy-my*16)+'px,0) rotateY('+(-mx*2.6)+'deg) rotateX('+(my*1.8)+'deg) scale(1.04)';
+    deepArt.style.transform='translate3d('+(-mx*26)+'px,'+(sy-my*16)+'px,0) scale(1.04)';
     drifts.forEach(d=>{const k=+d.dataset.depth||14;
       d.style.transform='translate3d('+(mx*k)+'px,'+(my*k*.6-sy*.35)+'px,0)'});
     queued=false;
@@ -642,9 +663,11 @@ if(deep&&deepArt){
   };
   addEventListener('scroll',onScroll,{passive:true});onScroll();
   if(fine){
+    let dr=deep.getBoundingClientRect();
+    addEventListener('resize',()=>{dr=deep.getBoundingClientRect()},{passive:true});
+    deep.addEventListener('pointerenter',()=>{dr=deep.getBoundingClientRect()},{passive:true});
     deep.addEventListener('pointermove',e=>{
-      const r=deep.getBoundingClientRect();
-      mx=(e.clientX-r.left)/r.width-.5;my=(e.clientY-r.top)/r.height-.5;schedule();
+      mx=(e.clientX-dr.left)/dr.width-.5;my=(e.clientY-dr.top)/dr.height-.5;schedule();
     },{passive:true});
     deep.addEventListener('pointerleave',()=>{mx=0;my=0;schedule()});
   }
@@ -657,6 +680,11 @@ const co=new IntersectionObserver(es=>es.forEach(e=>{
   requestAnimationFrame(tick);
 }),{threshold:.5});
 document.querySelectorAll('[data-n]').forEach(e=>co.observe(e));
+
+const idle=new IntersectionObserver(es=>es.forEach(e=>{
+  e.target.classList.toggle('idle',!e.isIntersecting);
+}),{rootMargin:'120px'});
+document.querySelectorAll('.waves,.bubbles').forEach(e=>idle.observe(e));
 
 document.getElementById('yr').textContent=new Date().getFullYear();
 </script>
