@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aegir Co. — Design, Desenvolvimento e Soluções</title>
+<meta name="description" content="Ægir domava o mar. A gente doma o digital. Sites, sistemas e identidade visual sob medida, feitos por desenvolvedores.">
+<meta name="theme-color" content="#04060c">
+<meta property="og:title" content="Aegir Co. — Design, Desenvolvimento e Soluções">
+<meta property="og:description" content="Ægir domava o mar. A gente doma o digital.">
+<meta property="og:image" content="assets/aegir-logo-completo.png">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/aegir-logo.png">
+<link rel="preload" as="image" href="assets/aegir-logo-completo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#03070e; --bg-2:#061019; --panel:rgba(255,255,255,.035);
+  --line:rgba(146,186,208,.13); --line-2:rgba(166,200,220,.22);
+  --txt:#eaf1f6; --txt-2:#94a7b8; --txt-3:#5f7185;
+  --blue:#1f6bff; --blue-2:#4a9bff; --teal:#7fc6de; --ember:#c07a34;
+  --mono:ui-monospace,'Cascadia Mono',Menlo,Consolas,monospace;
+  --r:18px; --max:1180px; --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);overscroll-behavior-y:none;font-family:'Inter',system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.6}
+body.lock{overflow:hidden}
+::selection{background:var(--blue);color:#fff}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%;height:auto}
+h1,h2,h3{font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.04;letter-spacing:-.03em;font-weight:600}
+.wrap{width:100%;max-width:var(--max);margin:0 auto;padding:0 24px}
+
+/* ── aurora boreal + ambiente ─────────────── */
+.bg{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none}
+.beam{position:absolute;left:-30vw;width:160vw;height:70vh;opacity:.55;will-change:transform;
+  contain:strict}
+.b1{top:-24vh;background:radial-gradient(60% 50% at 30% 50%,rgba(31,107,255,.42),transparent 70%),
+  radial-gradient(45% 42% at 62% 46%,rgba(127,198,222,.2),transparent 72%);animation:sway 34s ease-in-out infinite}
+.b2{top:2vh;background:radial-gradient(55% 45% at 66% 50%,rgba(192,122,52,.1),transparent 72%),
+  radial-gradient(45% 40% at 38% 52%,rgba(31,107,255,.22),transparent 74%);animation:sway 46s ease-in-out infinite reverse}
+.b3{bottom:-26vh;background:radial-gradient(60% 48% at 48% 50%,rgba(8,38,72,.5),transparent 72%);
+  animation:sway 58s ease-in-out infinite}
+@keyframes sway{0%,100%{transform:translate3d(-4vw,0,0)}50%{transform:translate3d(5vw,3vh,0)}}
+.grid-bg{position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:68px 68px;opacity:.55;
+  -webkit-mask-image:radial-gradient(ellipse 78% 58% at 50% 0%,#000 8%,transparent 76%);
+  mask-image:radial-gradient(ellipse 78% 58% at 50% 0%,#000 8%,transparent 76%)}
+.noise{position:fixed;inset:0;z-index:998;pointer-events:none;opacity:.04;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+.glow{position:fixed;top:0;left:0;width:520px;height:520px;margin:-260px 0 0 -260px;border-radius:50%;
+  pointer-events:none;z-index:-1;opacity:0;will-change:transform;
+  background:radial-gradient(circle,rgba(31,107,255,.13),transparent 65%);transition:opacity .6s}
+.prog{position:fixed;top:0;left:0;height:2px;width:100%;z-index:200;transform:scaleX(0);transform-origin:0 50%;will-change:transform;
+  background:linear-gradient(90deg,var(--blue-2),var(--teal));box-shadow:0 0 12px rgba(31,107,255,.8)}
+
+/* ── nav ──────────────────────────────────── */
+header{position:fixed;top:0;left:0;right:0;z-index:100;transition:.5s var(--ease)}
+header.on{backdrop-filter:blur(14px);background:rgba(4,6,12,.86);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;justify-content:space-between;height:80px;transition:.5s var(--ease)}
+header.on nav{height:64px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{width:30px}
+.brand b{font-family:'Space Grotesk';font-size:16.5px;font-weight:600;letter-spacing:.05em}
+.brand b i{font-style:normal;color:var(--blue-2)}
+.links{display:flex;gap:32px;align-items:center}
+.links a{font-size:13.5px;color:var(--txt-2);transition:.25s;position:relative}
+.links a::after{content:'';position:absolute;left:0;bottom:-6px;height:1px;width:0;background:var(--blue-2);transition:.35s var(--ease)}
+.links a:hover{color:var(--txt)}.links a:hover::after{width:100%}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:12px 22px;border-radius:100px;font-size:13.5px;
+  font-weight:500;transition:.35s var(--ease);border:1px solid transparent;white-space:nowrap;cursor:pointer;position:relative;overflow:hidden}
+.btn-p{background:linear-gradient(135deg,#2f7bff,#1240c9);color:#fff;box-shadow:0 6px 26px -8px rgba(31,107,255,.9)}
+.btn-p::after{content:'';position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.4),transparent 70%);
+  transform:translateX(-120%);transition:transform .7s var(--ease)}
+.btn-p:hover::after{transform:translateX(120%)}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 14px 42px -10px rgba(31,107,255,1)}
+.btn-g{border-color:var(--line-2);color:var(--txt);background:var(--panel)}
+.btn-g:hover{border-color:rgba(255,255,255,.32);background:rgba(255,255,255,.07);transform:translateY(-2px)}
+.burger{display:none;width:40px;height:40px;border:1px solid var(--line);border-radius:11px;background:var(--panel);
+  align-items:center;justify-content:center;flex-direction:column;gap:4px;cursor:pointer}
+.burger span{width:16px;height:1.5px;background:var(--txt);transition:.35s var(--ease)}
+.burger.x span:first-child{transform:translateY(2.75px) rotate(45deg)}
+.burger.x span:last-child{transform:translateY(-2.75px) rotate(-45deg)}
+.mob{position:fixed;inset:0;z-index:99;background:rgba(4,6,12,.97);backdrop-filter:blur(22px);display:flex;
+  flex-direction:column;align-items:center;justify-content:center;gap:26px;opacity:0;pointer-events:none;transition:.4s}
+.mob.open{opacity:1;pointer-events:auto}
+.mob a{font-family:'Space Grotesk';font-size:26px;color:var(--txt-2)}
+.mob a:hover{color:#fff}
+
+/* ── hero ─────────────────────────────────── */
+.hero{min-height:100svh;display:flex;align-items:center;padding:140px 0 100px;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:52px;align-items:center}
+.tag{display:inline-flex;align-items:center;gap:7px;padding:7px 16px;border:1px solid var(--line);border-radius:100px;background:var(--panel);font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--txt-2);margin-bottom:26px}
+.tag b{color:var(--blue-2)}
+h1{font-size:clamp(2.5rem,5.2vw,4.3rem);margin-bottom:26px;font-weight:600}
+h1 em{font-style:normal;background:linear-gradient(100deg,#fff 6%,#a9ccff 38%,#1f6bff 66%,#25d0c0 92%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;background-size:230% auto;animation:shine 8s linear infinite}
+@keyframes shine{to{background-position:230% center}}
+.lead{font-size:clamp(1rem,1.3vw,1.12rem);color:var(--txt-2);max-width:530px;font-weight:300}
+.hero-cta{display:flex;gap:13px;margin-top:36px;flex-wrap:wrap}
+.hero-art{position:relative;display:grid;place-items:center;perspective:1200px}
+.hero-art .halo{position:absolute;width:118%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle,rgba(31,107,255,.28),transparent 62%);filter:blur(30px)}
+.ring{position:absolute;border-radius:50%;aspect-ratio:1;border:1px solid var(--line)}
+.r1{width:min(104%,470px);animation:spin 30s linear infinite}
+.r2{width:min(84%,380px);border-style:dashed;border-color:rgba(74,155,255,.22);animation:spin 44s linear infinite reverse}
+.r3{width:min(126%,560px);border-color:rgba(255,255,255,.05)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.mark{width:min(86%,400px);transform-style:preserve-3d;transition:transform .4s var(--ease);position:relative}
+.mark img{animation:float 9s ease-in-out infinite;will-change:transform}
+@keyframes float{50%{transform:translateY(-14px)}}
+.orbit{position:absolute;width:min(104%,470px);aspect-ratio:1;animation:spin 30s linear infinite}
+.orbit i{position:absolute;top:-4px;left:50%;width:7px;height:7px;border-radius:50%;background:var(--teal);
+  box-shadow:0 0 14px var(--teal);translate:-50% 0}
+.stats{display:flex;gap:0;margin-top:52px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:22px}
+.stat{padding-right:36px;margin-right:36px;border-right:1px solid var(--line)}
+.stat:last-child{border-right:none;margin-right:0;padding-right:0}
+.stat b{font-family:'Space Grotesk';font-size:1.8rem;display:block;font-weight:500;letter-spacing:-.02em}
+.stat span{font-family:var(--mono);font-size:10.5px;color:var(--txt-3);letter-spacing:.1em;text-transform:uppercase}
+
+/* ── ondas ────────────────────────────────── */
+.waves{position:relative;height:110px;overflow:hidden;margin-top:-40px}
+.waves svg{position:absolute;top:0;left:0;width:200%;height:100%;fill:none;stroke-width:1;will-change:transform}
+.waves .s1{stroke:rgba(74,155,255,.28);animation:tide 26s linear infinite}
+.waves .s2{stroke:rgba(37,208,192,.14);animation:tide 40s linear infinite}
+@keyframes tide{to{transform:translateX(-50%)}}
+
+/* ── seções ───────────────────────────────── */
+section{padding:118px 0;position:relative;contain:layout style}
+.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue-2);
+  margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:'';width:26px;height:1px;background:linear-gradient(90deg,var(--blue-2),var(--teal))}
+h2{font-size:clamp(1.95rem,3.9vw,3rem);margin-bottom:18px}
+.sub{color:var(--txt-2);max-width:620px;font-weight:300}
+.head{margin-bottom:56px}
+
+/* lore — imersão submarina */
+#lore{padding:0;position:relative;background:var(--bg)}
+.deep{position:relative;min-height:min(100svh,940px);overflow:hidden;isolation:isolate;background:var(--bg);
+  perspective:1200px}
+.deep-art{position:absolute;inset:-3%;z-index:-3;transition:transform .6s var(--ease)}
+.deep-art picture{display:block;width:100%;height:100%}
+.deep-art img{width:100%;height:100%;object-fit:cover;object-position:50% 42%;transform:scale(1.06)}
+
+.deep::before{content:'';position:absolute;inset:0;z-index:-2;pointer-events:none;
+  background:linear-gradient(180deg,var(--bg) 0%,rgba(3,7,14,.94) 5%,rgba(3,7,14,.6) 12%,rgba(3,10,20,.16) 30%,
+    rgba(3,9,18,.3) 62%,rgba(3,7,14,.68) 86%,rgba(3,7,14,.95) 95%,var(--bg) 100%)}
+.deep::after{content:'';position:absolute;inset:0;z-index:-2;pointer-events:none;
+  background:radial-gradient(72% 55% at 50% 4%,rgba(150,205,225,.13),transparent 64%)}
+.bubbles{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.bubbles i{position:absolute;bottom:-40px;border-radius:50%;background:radial-gradient(circle at 32% 28%,
+  rgba(255,255,255,.55),rgba(180,220,235,.16) 46%,rgba(255,255,255,.05) 70%);
+  border:1px solid rgba(210,235,245,.18);animation:rise linear infinite}
+@keyframes rise{0%{transform:translate3d(0,0,0) scale(.8);opacity:0}
+  14%{opacity:.75}72%{opacity:.45}100%{transform:translate3d(26px,-104svh,0) scale(1.2);opacity:0}}
+.deep-stage{position:relative;z-index:1;height:min(100svh,940px);transform-style:preserve-3d}
+.deep-stage .wrap{position:relative;height:100%}
+.drift{position:absolute;will-change:transform;transition:transform .7s var(--ease)}
+.rune-row{top:16%;left:24px;display:flex;gap:18px;align-items:flex-end}
+.rune-row svg{width:26px;height:28px;stroke:#a8dcee;fill:none;stroke-width:1.2;opacity:.72;
+  filter:drop-shadow(0 2px 14px rgba(0,0,0,.85))}
+.rune-row svg:nth-child(2){transform:translateY(-7px)}
+.rune-row svg:nth-child(4){transform:translateY(-5px)}
+.pane{max-width:400px}
+.pane-a{left:24px;bottom:12%}
+.pane-b{right:24px;top:26%;text-align:right}
+.pane .eyebrow{color:#a8dcee;text-shadow:0 2px 14px rgba(0,0,0,.9)}
+.pane .eyebrow::before{background:linear-gradient(90deg,#a8dcee,transparent)}
+.pane-b .eyebrow{flex-direction:row-reverse}
+.pane-b .eyebrow::before{background:linear-gradient(270deg,#a8dcee,transparent)}
+.pane h3{font-size:1.42rem;margin-bottom:14px;text-shadow:0 2px 26px rgba(0,0,0,.95),0 1px 6px rgba(0,0,0,.8)}
+.pane p{color:#cfdfe9;font-weight:300;font-size:14.8px;text-shadow:0 2px 18px rgba(0,0,0,.95),0 1px 4px rgba(0,0,0,.85)}
+.pane p+p{margin-top:13px}
+.pane strong{color:#fff;font-weight:500}
+.pane .punch{color:#fff;font-weight:400;border-right:2px solid #a8dcee;padding-right:16px;margin-top:20px}
+.pane-a .punch{border-right:none;border-left:2px solid #a8dcee;padding:0 0 0 16px}
+.deep-cap{position:absolute;left:0;right:0;bottom:26px;text-align:center;font-family:var(--mono);
+  font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(180,210,225,.38);z-index:1}
+
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px}
+#servicos .cards{grid-template-columns:repeat(2,1fr)}
+#servicos .card{padding:38px 34px 34px}
+.card{position:relative;padding:34px 30px 32px;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
+  background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));transition:.45s var(--ease)}
+.card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .4s;pointer-events:none;
+  background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),rgba(31,107,255,.15),transparent 62%)}
+.card:hover{border-color:rgba(74,155,255,.42);transform:translateY(-5px)}
+.card:hover::before{opacity:1}
+.ico{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;margin-bottom:22px;
+  background:linear-gradient(140deg,rgba(31,107,255,.22),rgba(127,198,222,.07));border:1px solid rgba(74,155,255,.3)}
+.ico svg{width:21px;height:21px;stroke:var(--blue-2);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.card h3{font-size:1.2rem;margin-bottom:11px}
+.card p{font-size:14.3px;color:var(--txt-2);font-weight:300}
+.card .idx{position:absolute;top:22px;right:26px;font-family:var(--mono);font-size:11px;color:var(--txt-3);
+  letter-spacing:.1em;transition:.4s var(--ease)}
+.card:hover .idx{color:var(--blue-2)}
+.card .meta{margin-top:20px;padding-top:16px;border-top:1px solid var(--line);font-family:var(--mono);
+  font-size:11.5px;color:var(--txt-3);letter-spacing:.02em;line-height:1.8}
+.card .meta s{text-decoration:none;color:var(--blue-2);opacity:.6;margin:0 7px}
+
+/* forja */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));border:1px solid var(--line);
+  border-radius:var(--r);overflow:hidden}
+.step{padding:34px 26px;border-right:1px solid var(--line);transition:.4s var(--ease);position:relative;overflow:hidden}
+.step::after{content:attr(data-step);position:absolute;right:8px;bottom:-26px;font-family:'Space Grotesk';
+  font-size:6rem;font-weight:700;line-height:1;color:rgba(255,255,255,.028);transition:.5s var(--ease)}
+.step:hover::after{color:rgba(74,155,255,.12);bottom:-16px}
+.step:last-child{border-right:none}
+.step:hover{background:linear-gradient(180deg,rgba(31,107,255,.09),transparent)}
+.step svg{width:26px;height:28px;stroke:var(--blue-2);fill:none;stroke-width:1.5;margin-bottom:18px}
+.step b{font-family:var(--mono);font-size:10.5px;color:var(--txt-3);letter-spacing:.14em;display:block}
+.step h3{font-size:1.08rem;margin:8px 0 9px}
+.step p{font-size:13.5px;color:var(--txt-2);font-weight:300}
+
+/* marquee */
+.marq{border-block:1px solid var(--line);padding:24px 0;overflow:hidden;display:flex;gap:52px;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.marq div{display:flex;gap:52px;animation:slide 36s linear infinite;flex-shrink:0}
+@keyframes slide{to{transform:translateX(calc(-100% - 52px))}}
+.marq span{font-family:var(--mono);font-size:12.5px;text-transform:lowercase;color:var(--txt-3);white-space:nowrap;letter-spacing:.05em}
+.marq span.hl{color:var(--blue-2)}
+
+/* salão — índice editorial */
+.rows{border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:64px 1fr 200px 40px;align-items:center;gap:24px;padding:30px 8px;
+  border-bottom:1px solid var(--line);position:relative;transition:.45s var(--ease)}
+.row::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0;transition:.5s var(--ease);
+  background:linear-gradient(90deg,rgba(31,107,255,.14),transparent 70%)}
+.row:hover{padding-left:22px}
+.row:hover::before{width:100%}
+.row>*{position:relative}
+.row .n{font-family:var(--mono);font-size:11.5px;color:var(--txt-3);letter-spacing:.08em}
+.row .t b{display:block;font-family:'Space Grotesk';font-size:1.42rem;font-weight:500;letter-spacing:-.02em;
+  transition:.4s var(--ease)}
+.row:hover .t b{color:#fff}
+.row .t i{display:block;font-style:normal;font-size:13.8px;color:var(--txt-2);font-weight:300;margin-top:6px;max-width:520px}
+.row .k{font-family:var(--mono);font-size:11.5px;color:var(--txt-3);text-align:right}
+.row svg{width:22px;height:22px;color:var(--txt-3);transition:.45s var(--ease);justify-self:end}
+.row:hover svg{color:var(--blue-2);transform:translateX(6px)}
+.row:hover .n{color:var(--blue-2)}
+
+/* cta */
+.cta{border:1px solid var(--line);border-radius:26px;padding:74px 50px;text-align:center;position:relative;overflow:hidden;
+  background:radial-gradient(90% 130% at 50% 0%,rgba(31,107,255,.2),transparent 62%),var(--bg-2)}
+.shield{position:absolute;left:50%;top:-30px;translate:-50% 0;width:300px;opacity:.07;pointer-events:none}
+.cta h2{font-size:clamp(1.95rem,4.1vw,3.1rem);position:relative}
+.cta p{color:var(--txt-2);max-width:520px;margin:16px auto 34px;font-weight:300;position:relative}
+.cta-btns{display:flex;gap:13px;justify-content:center;flex-wrap:wrap;position:relative}
+.fine{margin-top:26px;font-size:12px;color:var(--txt-3);position:relative}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding:56px 0 40px}
+.f-grid{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;margin-bottom:38px}
+.f-brand img{width:150px;margin-bottom:16px}
+.f-grid p{font-size:13.5px;color:var(--txt-2);max-width:310px;font-weight:300}
+.f-col h4{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--txt-3);margin-bottom:16px;font-weight:500}
+.f-col a{display:block;font-size:13.7px;color:var(--txt-2);margin-bottom:10px;transition:.25s}
+.f-col a:hover{color:var(--blue-2)}
+.f-bot{border-top:1px solid var(--line);padding-top:24px;display:flex;justify-content:space-between;gap:16px;
+  flex-wrap:wrap;font-size:12.3px;color:var(--txt-3)}
+
+.rv{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.rv.in{opacity:1;transform:none}
+
+@media(max-width:900px){
+  .deep{min-height:auto;padding:0}
+  .deep-stage{height:auto;padding:120px 0 96px}
+  .drift{position:static;transform:none!important}
+  .rune-row{margin-bottom:30px}
+  .pane{max-width:none}
+  .pane-b{text-align:left;margin-top:52px}
+  .pane-b .eyebrow{flex-direction:row}
+  .pane-b .eyebrow::before{background:linear-gradient(90deg,#a8dcee,transparent)}
+  .pane .punch,.pane-a .punch{border-right:none;border-left:2px solid #a8dcee;padding:0 0 0 16px}
+  .deep-art{-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 18%,#000 80%,transparent 100%);
+    mask-image:linear-gradient(180deg,transparent 0,#000 18%,#000 80%,transparent 100%)}
+  .deep-cap{display:none}
+  .hero{min-height:auto;padding:120px 0 80px}
+  .hero-grid,#servicos .cards{grid-template-columns:1fr;gap:44px}
+  .mark{width:min(58%,270px)}
+  .r1{width:min(88%,300px)}.r2{width:min(68%,232px)}.r3{width:min(108%,360px)}
+  .hero-art .halo{width:120%}
+  h1{font-size:clamp(2.4rem,6.4vw,3.4rem)}
+  #servicos .cards{gap:16px}
+  .hero-art{order:-1}
+  .links,.nav-cta{display:none}.burger{display:flex}
+  section{padding:84px 0}
+  .step{border-right:none;border-bottom:1px solid var(--line)}
+  .step:last-child{border-bottom:none}
+  .row{grid-template-columns:44px 1fr;gap:14px;padding:24px 6px}
+  .row .k,.row svg{display:none}
+  .row:hover{padding-left:10px}
+  .cta{padding:52px 24px}
+  .glow{display:none}
+}
+@media(max-width:640px){
+  .wrap{padding:0 20px}
+  nav{height:66px}
+  header.on nav{height:58px}
+  .brand img{width:26px}.brand b{font-size:15px}
+  .hero{min-height:auto;padding:108px 0 72px}
+  .hero-grid{gap:34px}
+  h1{font-size:clamp(2rem,8.6vw,2.6rem);margin-bottom:20px}
+  .lead{font-size:15px}
+  .hero-cta{gap:10px;margin-top:28px}
+  .hero-cta .btn{flex:1 1 100%;justify-content:center;padding:14px 20px}
+  .mark{width:min(84%,300px)}
+  .r1{width:min(96%,320px)}.r2{width:min(74%,250px)}.r3{width:min(118%,390px)}
+  .hero-art .halo{width:132%}
+  .stats{margin-top:38px;padding-top:18px;gap:0 26px;row-gap:20px}
+  .stat{padding-right:22px;margin-right:22px}
+  .stat:nth-child(2){border-right:none;margin-right:0;padding-right:0}
+  .stat b{font-size:1.55rem}
+  .waves{height:72px;margin-top:-20px}
+  section{padding:70px 0}
+  .head{margin-bottom:38px}
+  h2{font-size:clamp(1.7rem,7.4vw,2.2rem)}
+  .sub{font-size:14.5px}
+  .deep-stage{padding:96px 0 76px}
+  .pane h3{font-size:1.24rem}
+  .pane-b{margin-top:44px}
+  .card{padding:28px 22px 26px;border-radius:16px}
+  .card .idx{top:18px;right:20px}
+  .card h3{font-size:1.1rem}
+  .card .meta{font-size:11px;line-height:1.9}
+  .steps{border-radius:16px}
+  .step{padding:26px 22px}
+  .step::after{font-size:4.2rem;bottom:-10px;right:14px}
+  .marq{padding:18px 0;gap:34px}
+  .marq div{gap:34px;animation-duration:26s}
+  .marq span{font-size:11.5px}
+  .rows{border-top:none}
+  .row{grid-template-columns:38px 1fr;gap:12px;padding:20px 0;align-items:start}
+  .row .n{padding-top:5px}
+  .row .t b{font-size:1.16rem}
+  .row .t i{font-size:13.2px;margin-top:5px}
+  .cta{padding:44px 20px;border-radius:20px}
+  .shield{width:200px;top:-14px}
+  .cta p{margin:14px auto 26px;font-size:14.5px}
+  .cta-btns{flex-direction:column}
+  .cta-btns .btn{justify-content:center;padding:14px 20px}
+  .f-grid{gap:30px;margin-bottom:30px}
+  .f-brand img{width:130px}
+  .f-col{min-width:44%}
+  .f-bot{flex-direction:column;gap:8px}
+  .mob a{font-size:23px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="prog" id="prog"></div>
+<div class="bg"><div class="beam b1"></div><div class="beam b2"></div><div class="beam b3"></div></div>
+<div class="grid-bg"></div><div class="glow" id="glow"></div><div class="noise"></div>
+
+<header id="hdr"><div class="wrap"><nav>
+  <a class="brand" href="#top"><img src="assets/aegir-logo.png" alt="Aegir Co." width="300" height="264" decoding="async"><b>AEGIR <i>CO.</i></b></a>
+  <div class="links">
+    <a href="#lore">A saga</a><a href="#servicos">Arsenal</a><a href="#forja">A forja</a><a href="#salao">O salão</a><a href="#tripulacao">Tripulação</a>
+  </div>
+  <a class="btn btn-p nav-cta" href="#contato">Zarpar com a gente</a>
+  <div class="burger" id="bg" role="button" aria-label="Menu"><span></span><span></span></div>
+</nav></div></header>
+
+<div class="mob" id="mob">
+  <a href="#lore">A saga</a><a href="#servicos">Arsenal</a><a href="#forja">A forja</a><a href="#salao">O salão</a><a href="#tripulacao">Tripulação</a>
+  <a class="btn btn-p" href="#contato">Zarpar com a gente</a>
+</div>
+
+<main id="top">
+<section class="hero"><div class="wrap"><div class="hero-grid">
+  <div>
+    <span class="tag rv">Design <b>•</b> Desenvolvimento <b>•</b> Soluções</span>
+    <h1 class="rv">Ægir domava o mar.<br>A gente doma<br><em>o digital.</em></h1>
+    <p class="lead rv">Sites, sistemas e identidade visual sob medida — código próprio, acabamento de armaria e nenhum navio à deriva. Sua empresa merece chegar ao porto inteira.</p>
+    <div class="hero-cta rv">
+      <a class="btn btn-p" href="#contato">Começar a travessia
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></a>
+      <a class="btn btn-g" href="#salao">Ver o salão</a>
+    </div>
+    <div class="stats rv">
+      <div class="stat"><b data-n="100" data-suf="%">0</b><span>Código próprio</span></div>
+      <div class="stat"><b data-n="7" data-suf=" dias">0</b><span>Primeira entrega</span></div>
+      <div class="stat"><b data-n="48" data-suf="h">0</b><span>Orçamento</span></div>
+    </div>
+  </div>
+  <div class="hero-art">
+    <div class="halo"></div>
+    <div class="ring r3"></div><div class="ring r1"></div><div class="ring r2"></div>
+    <div class="orbit"><i></i></div>
+    <div class="mark" id="mk"><img src="assets/aegir-logo-completo.png" alt="Logo Aegir Co." width="1000" height="667" fetchpriority="high" decoding="async"></div>
+  </div>
+</div></div></section>
+
+<div class="waves" aria-hidden="true">
+  <svg class="s1" viewBox="0 0 2400 110" preserveAspectRatio="none">
+    <path d="M0,64 C150,26 250,102 400,64 C550,26 650,102 800,64 C950,26 1050,102 1200,64 C1350,26 1450,102 1600,64 C1750,26 1850,102 2000,64 C2150,26 2250,102 2400,64"/></svg>
+  <svg class="s2" viewBox="0 0 2400 110" preserveAspectRatio="none">
+    <path d="M0,82 C200,46 300,110 500,82 C700,54 800,110 1000,82 C1200,54 1300,110 1500,82 C1700,54 1800,110 2000,82 C2200,54 2300,110 2400,82"/></svg>
+</div>
+
+<section id="lore"><div class="deep">
+  <div class="deep-art" id="deepArt" aria-hidden="true">
+    <picture>
+      <source media="(max-width:700px)" srcset="assets/aegir-deep-sm.webp">
+      <img src="assets/aegir-deep.webp" alt="" width="1698" height="926" loading="lazy" decoding="async">
+    </picture>
+  </div>
+  <div class="bubbles" aria-hidden="true">
+    <i style="left:5%;width:6px;height:6px;animation-duration:19s;animation-delay:-2s"></i>
+    <i style="left:11%;width:3px;height:3px;animation-duration:25s;animation-delay:-9s"></i>
+    <i style="left:18%;width:8px;height:8px;animation-duration:23s;animation-delay:-14s"></i>
+    <i style="left:25%;width:4px;height:4px;animation-duration:17s;animation-delay:-5s"></i>
+    <i style="left:33%;width:5px;height:5px;animation-duration:27s;animation-delay:-20s"></i>
+    <i style="left:40%;width:9px;height:9px;animation-duration:30s;animation-delay:-11s"></i>
+    <i style="left:47%;width:3px;height:3px;animation-duration:21s;animation-delay:-7s"></i>
+    <i style="left:54%;width:6px;height:6px;animation-duration:24s;animation-delay:-16s"></i>
+    <i style="left:61%;width:4px;height:4px;animation-duration:18s;animation-delay:-3s"></i>
+    <i style="left:68%;width:7px;height:7px;animation-duration:26s;animation-delay:-22s"></i>
+    <i style="left:74%;width:3px;height:3px;animation-duration:20s;animation-delay:-12s"></i>
+    <i style="left:81%;width:5px;height:5px;animation-duration:29s;animation-delay:-6s"></i>
+    <i style="left:87%;width:8px;height:8px;animation-duration:31s;animation-delay:-18s"></i>
+    <i style="left:93%;width:4px;height:4px;animation-duration:22s;animation-delay:-10s"></i>
+    <i style="left:97%;width:6px;height:6px;animation-duration:27s;animation-delay:-15s"></i>
+  </div>
+  <div class="deep-stage"><div class="wrap">
+    <div class="rune-row drift" data-depth="26" aria-hidden="true">
+      <svg viewBox="0 0 24 26"><path d="M4 24L12 2l8 22M8 12h9"/></svg>
+      <svg viewBox="0 0 24 26"><path d="M5 2v22M19 2v22M5 7l14 12"/></svg>
+      <svg viewBox="0 0 24 26"><path d="M4 3l16 20M20 3L4 23"/></svg>
+      <svg viewBox="0 0 24 26"><path d="M6 24V2h8l5 5-5 5H6M14 12l5 12"/></svg>
+    </div>
+    <div class="pane pane-a drift rv" data-depth="16">
+      <div class="eyebrow">A saga</div>
+      <h3>Por que Ægir?</h3>
+      <p>Na mitologia nórdica, <strong>Ægir</strong> era o gigante que dominava o mar — imprevisível lá fora, mas anfitrião do salão mais bem servido dos nove mundos. Quem chegava, ficava.</p>
+      <p>E existe a <strong>aegis</strong>: o escudo que nenhuma lança atravessa. Nome bom demais para deixar passar.</p>
+    </div>
+    <div class="pane pane-b drift rv" data-depth="20">
+      <div class="eyebrow">A tradução</div>
+      <h3>Mar bravo lá fora.<br>Salão impecável aqui dentro.</h3>
+      <p>A internet é o mar: algoritmo muda, concorrente aparece, cliente decide em três segundos. A gente não controla a maré — controla a embarcação.</p>
+      <p class="punch">Seu site precisa das duas coisas: ser bonito de receber e impossível de derrubar. É exatamente o que a gente constrói.</p>
+    </div>
+  </div></div>
+  <span class="deep-cap">Nove mundos abaixo da superfície</span>
+</div></section>
+
+<div class="marq"><div>
+  <span>Landing Pages</span><span class="hl">•</span><span>Sites Institucionais</span><span class="hl">•</span><span>E-commerce</span><span class="hl">•</span>
+  <span>Sistemas Web</span><span class="hl">•</span><span>Dashboards</span><span class="hl">•</span><span>Identidade Visual</span><span class="hl">•</span>
+  <span>Social Media</span><span class="hl">•</span><span>Integrações e APIs</span><span class="hl">•</span>
+</div><div aria-hidden="true">
+  <span>Landing Pages</span><span class="hl">•</span><span>Sites Institucionais</span><span class="hl">•</span><span>E-commerce</span><span class="hl">•</span>
+  <span>Sistemas Web</span><span class="hl">•</span><span>Dashboards</span><span class="hl">•</span><span>Identidade Visual</span><span class="hl">•</span>
+  <span>Social Media</span><span class="hl">•</span><span>Integrações e APIs</span><span class="hl">•</span>
+</div></div>
+
+<section id="servicos"><div class="wrap">
+  <div class="head rv"><div class="eyebrow">Arsenal</div>
+    <h2>Do primeiro pixel<br>ao deploy final.</h2>
+    <p class="sub">Estratégia, design, código e publicação — ponta a ponta. Você fala com quem constrói, não com intermediário.</p></div>
+  <div class="cards">
+    <article class="card rv"><div class="ico"><svg viewBox="0 0 24 24"><path d="M3 5h18v14H3z"/><path d="M3 9h18M7 13h6"/></svg></div>
+      <span class="idx">01</span>
+      <h3>Sites &amp; Landing Pages</h3>
+      <p>Páginas rápidas, responsivas e feitas para converter. Design autoral, performance real e SEO técnico desde a fundação.</p>
+      <p class="meta">institucional<s>/</s>campanha<s>/</s>portfólio<s>/</s>SEO técnico</p></article>
+    <article class="card rv"><div class="ico"><svg viewBox="0 0 24 24"><path d="M8 6l-5 6 5 6M16 6l5 6-5 6M13 4l-2 16"/></svg></div>
+      <span class="idx">02</span>
+      <h3>Sistemas &amp; Aplicações</h3>
+      <p>Somos desenvolvedores: painéis administrativos, área de cliente, automações e integrações com o que sua operação já usa.</p>
+      <p class="meta">dashboards<s>/</s>login e permissões<s>/</s>APIs<s>/</s>automação</p></article>
+    <article class="card rv"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a14 14 0 000 18M3 12h18"/></svg></div>
+      <span class="idx">03</span>
+      <h3>Identidade &amp; Conteúdo</h3>
+      <p>Logo, paleta, tipografia e kit de posts consistente — a marca falando a mesma língua no site e nas redes.</p>
+      <p class="meta">identidade visual<s>/</s>social media<s>/</s>peças de campanha</p></article>
+    <article class="card rv"><div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v6c0 5-3.5 7.5-8 8-4.5-.5-8-3-8-8V7z"/><path d="M9 12l2 2 4-4"/></svg></div>
+      <span class="idx">04</span>
+      <h3>Escudo &amp; Manutenção</h3>
+      <p>Hospedagem, domínio, backup, atualização e ajuste contínuo. No ar, rápido e seguro — sem você se preocupar.</p>
+      <p class="meta">monitoramento<s>/</s>backups<s>/</s>melhorias contínuas</p></article>
+  </div>
+</div></section>
+
+<section id="forja"><div class="wrap">
+  <div class="head rv"><div class="eyebrow">A forja</div>
+    <h2>Simples de acompanhar.<br>Sério na execução.</h2>
+    <p class="sub">Quatro etapas claras, prazo combinado e você vendo o projeto tomar forma em tempo real.</p></div>
+  <div class="steps rv">
+    <div class="step" data-step="01"><svg viewBox="0 0 24 26"><path d="M4 24L12 2l8 22M8 12h9"/></svg><b>CONVERSA INICIAL</b>
+      <h3>Conversa</h3><p>Entendemos negócio, público e objetivo. Sem formulário frio — papo direto.</p></div>
+    <div class="step" data-step="02"><svg viewBox="0 0 24 26"><path d="M5 2v22M19 2v22M5 7l14 12"/></svg><b>ESCOPO NO PAPEL</b>
+      <h3>Rota</h3><p>Escopo, prazo e valor no papel antes de qualquer linha de código. Nada de surpresa.</p></div>
+    <div class="step" data-step="03"><svg viewBox="0 0 24 26"><path d="M4 3l16 20M20 3L4 23"/></svg><b>MÃO NA MASSA</b>
+      <h3>Construção</h3><p>Design aprovado, ciclos curtos de desenvolvimento e link de preview sempre atualizado.</p></div>
+    <div class="step" data-step="04"><svg viewBox="0 0 24 26"><path d="M6 24V2h8l5 5-5 5H6M14 12l5 12"/></svg><b>NO AR</b>
+      <h3>Zarpada</h3><p>Deploy, domínio, medição e acompanhamento. A entrega é o começo, não o fim.</p></div>
+  </div>
+</div></section>
+
+<section id="salao"><div class="wrap">
+  <div class="head rv"><div class="eyebrow">O salão</div>
+    <h2>Projetos que<br>seguram o olhar.</h2>
+    <p class="sub">Cada projeto nasce do zero, com a cara do cliente — não de um tema pronto revendido para outras dez empresas.</p></div>
+  <div class="rows">
+    <a class="row rv" href="#contato">
+      <span class="n">001</span>
+      <span class="t"><b>Presença institucional</b><i>Páginas de serviço, provas sociais e contato direto. O cliente confia antes de falar com você.</i></span>
+      <span class="k">site · SEO · CMS</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+    </a>
+    <a class="row rv" href="#contato">
+      <span class="n">002</span>
+      <span class="t"><b>Landing de conversão</b><i>Uma página, um objetivo. Oferta clara, carregamento instantâneo, caminho curto até o botão.</i></span>
+      <span class="k">landing · copy · analytics</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+    </a>
+    <a class="row rv" href="#contato">
+      <span class="n">003</span>
+      <span class="t"><b>Plataforma sob medida</b><i>Área logada, painel de gestão, integrações. Quando o pronto não resolve, a gente constrói.</i></span>
+      <span class="k">app · API · banco</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+    </a>
+    <a class="row rv" href="#contato">
+      <span class="n">004</span>
+      <span class="t"><b>Marca e conteúdo</b><i>Identidade visual, kit de posts e peças de campanha falando a mesma língua do site.</i></span>
+      <span class="k">logo · social · campanha</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+</div></section>
+
+<section id="tripulacao"><div class="wrap"><div class="hero-grid">
+  <div class="rv"><div class="eyebrow">Tripulação</div>
+    <h2>Time pequeno,<br>obcecado por detalhe.</h2>
+    <p class="sub" style="margin-top:18px">A Aegir Co. nasceu de um grupo de amigos desenvolvedores cansados de ver empresa boa com site ruim. Somos enxutos de propósito: sem camada de burocracia, sem gerente repassando recado. Você fala com quem desenha e com quem programa.</p>
+    <p class="sub" style="margin-top:16px">Resposta rápida, escopo honesto e acabamento de agência grande — no ritmo de quem está construindo reputação e não pode entregar nada morno.</p>
+    <div class="hero-cta"><a class="btn btn-g" href="#contato">Chamar a tripulação</a></div>
+  </div>
+  <div class="cards rv" style="grid-template-columns:1fr">
+    <div class="card"><h3>Forjado à mão</h3><p>Código próprio, sem builder travando o que você pode fazer depois.</p></div>
+    <div class="card"><h3>Rápido de verdade</h3><p>Performance e responsividade tratadas como requisito, não como extra.</p></div>
+    <div class="card"><h3>O leme é seu</h3><p>Entregamos código, acessos e domínio no seu nome. Sem refém.</p></div>
+  </div>
+</div></div></section>
+
+<section id="contato"><div class="wrap"><div class="cta rv">
+  <svg class="shield" viewBox="0 0 100 120" fill="none" stroke="#4a9bff" stroke-width="2" aria-hidden="true">
+    <path d="M50 4l44 18v40c0 30-20 46-44 54C26 108 6 92 6 62V22z"/><path d="M50 20v78M20 40h60"/></svg>
+  <div class="eyebrow" style="justify-content:center">Zarpar</div>
+  <h2>Traga a ideia.<br>A gente traça a rota.</h2>
+  <p>Primeira conversa e orçamento sem custo. Diga em uma frase o que sua empresa faz — o resto a gente conduz.</p>
+  <div class="cta-btns">
+    <a class="btn btn-p" href="https://wa.me/5500000000000?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20Aegir%20Co." target="_blank" rel="noopener">Chamar no WhatsApp
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></a>
+    <a class="btn btn-g" href="mailto:contato@aegirco.com?subject=Projeto%20novo">contato@aegirco.com</a>
+  </div>
+  <p class="fine">Orçamento em até 48h • Escopo e prazo por escrito antes de iniciar</p>
+</div></div></section>
+</main>
+
+<footer><div class="wrap">
+  <div class="f-grid">
+    <div class="f-brand"><img src="assets/aegir-nome.png" alt="Aegir Co." width="600" height="95" loading="lazy" decoding="async">
+      <p>Ægir dominava o mar e servia a melhor bebida dos nove mundos. Mantemos a tradição — a bebida fica para a entrega do projeto.</p></div>
+    <div class="f-col"><h4>Arsenal</h4><a href="#servicos">Sites e landing pages</a><a href="#servicos">Sistemas web</a><a href="#servicos">Identidade visual</a><a href="#servicos">Social media</a></div>
+    <div class="f-col"><h4>Empresa</h4><a href="#lore">A saga</a><a href="#forja">A forja</a><a href="#salao">O salão</a><a href="#tripulacao">Tripulação</a></div>
+    <div class="f-col"><h4>Contato</h4><a href="mailto:contato@aegirco.com">contato@aegirco.com</a><a href="https://wa.me/5500000000000" target="_blank" rel="noopener">WhatsApp</a><a href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a></div>
+  </div>
+  <div class="f-bot"><span>© <span id="yr">2026</span> Aegir Co. Todos os direitos reservados.</span><span>Feito com código próprio, no Brasil.</span></div>
+</div></footer>
+
+<script>
+const hdr=document.getElementById('hdr'),prog=document.getElementById('prog');
+let tick=false;
+addEventListener('scroll',()=>{
+  if(tick)return;tick=true;
+  requestAnimationFrame(()=>{
+    hdr.classList.toggle('on',scrollY>24);
+    prog.style.transform='scaleX('+(scrollY/(document.documentElement.scrollHeight-innerHeight))+')';
+    tick=false;
+  });
+},{passive:true});
+
+const mob=document.getElementById('mob'),burger=document.getElementById('bg');
+const setMenu=on=>{mob.classList.toggle('open',on);burger.classList.toggle('x',on);document.body.classList.toggle('lock',on)};
+burger.onclick=()=>setMenu(!mob.classList.contains('open'));
+mob.querySelectorAll('a').forEach(a=>a.onclick=()=>setMenu(false));
+addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false)});
+
+const io=new IntersectionObserver(es=>es.forEach((e,i)=>{
+  if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*70);io.unobserve(e.target)}
+}),{threshold:.12,rootMargin:'0px 0px -8%'});
+document.querySelectorAll('.rv').forEach(e=>io.observe(e));
+
+document.querySelectorAll('.card').forEach(c=>c.addEventListener('pointermove',e=>{
+  const r=c.getBoundingClientRect();
+  c.style.setProperty('--mx',(e.clientX-r.left)+'px');
+  c.style.setProperty('--my',(e.clientY-r.top)+'px');
+}));
+
+const mk=document.getElementById('mk'),glow=document.getElementById('glow');
+if(matchMedia('(pointer:fine)').matches){
+  let px=0,py=0,pending=false;
+  addEventListener('pointermove',e=>{
+    px=e.clientX;py=e.clientY;
+    if(pending)return;pending=true;
+    requestAnimationFrame(()=>{
+      const x=px/innerWidth-.5,y=py/innerHeight-.5;
+      mk.style.transform='rotateY('+(x*14)+'deg) rotateX('+(-y*14)+'deg)';
+      glow.style.opacity=1;glow.style.transform='translate3d('+px+'px,'+py+'px,0)';
+      pending=false;
+    });
+  },{passive:true});
+}
+
+const deep=document.querySelector('.deep'),deepArt=document.getElementById('deepArt'),
+      drifts=[...document.querySelectorAll('.drift')];
+if(deep&&deepArt){
+  let mx=0,my=0,sy=0,queued=false,fine=matchMedia('(pointer:fine)').matches;
+  const paint=()=>{
+    deepArt.style.transform='translate3d('+(-mx*26)+'px,'+(sy-my*16)+'px,0) rotateY('+(-mx*2.6)+'deg) rotateX('+(my*1.8)+'deg) scale(1.04)';
+    drifts.forEach(d=>{const k=+d.dataset.depth||14;
+      d.style.transform='translate3d('+(mx*k)+'px,'+(my*k*.6-sy*.35)+'px,0)'});
+    queued=false;
+  };
+  const schedule=()=>{if(!queued){queued=true;requestAnimationFrame(paint)}};
+  const onScroll=()=>{
+    const r=deep.getBoundingClientRect();
+    if(r.bottom<0||r.top>innerHeight)return;
+    sy=((r.top+r.height/2)/innerHeight-.5)*-52;
+    schedule();
+  };
+  addEventListener('scroll',onScroll,{passive:true});onScroll();
+  if(fine){
+    deep.addEventListener('pointermove',e=>{
+      const r=deep.getBoundingClientRect();
+      mx=(e.clientX-r.left)/r.width-.5;my=(e.clientY-r.top)/r.height-.5;schedule();
+    },{passive:true});
+    deep.addEventListener('pointerleave',()=>{mx=0;my=0;schedule()});
+  }
+}
+
+const co=new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting)return;co.unobserve(e.target);
+  const el=e.target,n=+el.dataset.n,suf=el.dataset.suf||'',t0=performance.now();
+  const tick=t=>{const p=Math.min((t-t0)/1300,1);el.textContent=Math.round(n*(1-Math.pow(1-p,3)))+suf;if(p<1)requestAnimationFrame(tick)};
+  requestAnimationFrame(tick);
+}),{threshold:.5});
+document.querySelectorAll('[data-n]').forEach(e=>co.observe(e));
+
+document.getElementById('yr').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
