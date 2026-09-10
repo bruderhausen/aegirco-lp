@@ -146,13 +146,13 @@ h2{font-size:clamp(1.95rem,3.9vw,3rem);margin-bottom:18px}
 
 /* lore — imersão submarina */
 #lore{padding:0;position:relative;background:transparent;margin:-1px 0}
-.deep{position:relative;min-height:min(100svh,940px);overflow:hidden;background:transparent}
+.deep{position:relative;min-height:min(100svh,940px);overflow:hidden;background:transparent;perspective:1400px}
 .deep-art{position:absolute;inset:0;z-index:-3;overflow:hidden;contain:paint;
   --deep-fade:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.06) 4%,rgba(0,0,0,.22) 8%,
     rgba(0,0,0,.5) 13%,rgba(0,0,0,.8) 18%,#000 23%,#000 77%,rgba(0,0,0,.8) 82%,
     rgba(0,0,0,.5) 87%,rgba(0,0,0,.22) 92%,rgba(0,0,0,.06) 96%,transparent 100%);
   -webkit-mask-image:var(--deep-fade);mask-image:var(--deep-fade)}
-.deep-layer{position:absolute;inset:-4%}
+.deep-layer{position:absolute;inset:-7%;will-change:transform}
 .deep-art picture{display:block;width:100%;height:100%}
 .deep-art img{width:100%;height:100%;object-fit:cover;object-position:50% 42%;transform:scale(1.06)}
 
@@ -643,6 +643,8 @@ const deep=document.querySelector('.deep'),deepArt=document.getElementById('deep
 if(deep&&deepArt){
   let mx=0,my=0,sy=0,queued=false,fine=matchMedia('(pointer:fine)').matches;
   const paint=()=>{
+    deepArt.style.transform='translate3d('+(-mx*30)+'px,'+(-my*20+sy*.6)+'px,0)'+
+      ' rotateY('+(-mx*2.4)+'deg) rotateX('+(my*1.7)+'deg)';
     drifts.forEach(d=>{const k=+d.dataset.depth||14;
       d.style.transform='translate3d('+(mx*k)+'px,'+(my*k*.6-sy*.35)+'px,0)'});
     queued=false;
