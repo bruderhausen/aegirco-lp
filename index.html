@@ -45,9 +45,11 @@ h1,h2,h3{font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.04;lette
 .b3{bottom:-26vh;background:radial-gradient(60% 48% at 48% 50%,rgba(8,38,72,.5),transparent 72%);
   animation:sway 58s ease-in-out infinite}
 @keyframes sway{0%,100%{transform:translate3d(-4vw,0,0)}50%{transform:translate3d(5vw,3vh,0)}}
-.depth{position:fixed;inset:-25% 0;z-index:-1;pointer-events:none;will-change:transform;
-  background:linear-gradient(180deg,rgba(126,178,205,.1) 0%,rgba(20,58,96,.16) 16%,transparent 42%,
-    rgba(2,8,18,.5) 74%,rgba(1,4,10,.85) 100%)}
+.depth{position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:linear-gradient(180deg,rgba(126,178,205,.12) 0%,rgba(20,58,96,.18) 14%,transparent 40%,
+    rgba(2,8,18,.5) 74%,rgba(1,4,10,.88) 100%);
+  background-size:100% 240%;background-repeat:no-repeat;
+  background-position:0 calc(var(--dp,0) * 100%)}
 .motes{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
 .motes i{position:absolute;bottom:-24px;border-radius:50%;opacity:.5;
   background:radial-gradient(circle at 34% 30%,rgba(255,255,255,.4),rgba(160,205,225,.1) 55%,transparent 72%);
@@ -398,7 +400,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px}
 <body>
 <div class="prog" id="prog"></div>
 <div class="bg"><div class="beam b1"></div><div class="beam b2"></div><div class="beam b3"></div></div>
-<div class="depth" data-par=".12"></div>
+<div class="depth" id="depth"></div>
 <div class="motes" aria-hidden="true"><i style="left:6%;width:4px;height:4px;animation-duration:34s;animation-delay:-4s"></i><i style="left:17%;width:3px;height:3px;animation-duration:44s;animation-delay:-19s"></i><i style="left:29%;width:5px;height:5px;animation-duration:38s;animation-delay:-27s"></i><i style="left:43%;width:3px;height:3px;animation-duration:50s;animation-delay:-9s"></i><i style="left:56%;width:4px;height:4px;animation-duration:41s;animation-delay:-33s"></i><i style="left:67%;width:6px;height:6px;animation-duration:46s;animation-delay:-15s"></i><i style="left:78%;width:3px;height:3px;animation-duration:36s;animation-delay:-23s"></i><i style="left:91%;width:4px;height:4px;animation-duration:52s;animation-delay:-7s"></i></div><div class="glow" id="glow"></div><div class="noise"></div>
 
 <header id="hdr"><div class="wrap"><nav>
@@ -642,13 +644,15 @@ else{
   },{passive:true,once:true});
 }
 
-const hdr=document.getElementById('hdr'),prog=document.getElementById('prog');
+const hdr=document.getElementById('hdr'),prog=document.getElementById('prog'),depthEl=document.getElementById('depth');
 let tick=false,maxScroll=1;
 const measure=()=>{maxScroll=Math.max(document.documentElement.scrollHeight-innerHeight,1)};
 measure();addEventListener('resize',measure,{passive:true});addEventListener('load',measure);
 addEventListener('scroll',()=>{
   if(tick)return;tick=true;
   requestAnimationFrame(()=>{
+    const prog01=scrollY/Math.max(document.documentElement.scrollHeight-innerHeight,1);
+    depthEl&&depthEl.style.setProperty('--dp',prog01.toFixed(4));
     hdr.classList.toggle('on',scrollY>24);
     prog.style.transform='scaleX('+(scrollY/maxScroll)+')';
     tick=false;
