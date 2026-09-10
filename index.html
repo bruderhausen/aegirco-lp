@@ -92,7 +92,7 @@ header.on nav{height:64px}
 .mob a:hover{color:#fff}
 
 /* ── hero ─────────────────────────────────── */
-.hero{min-height:100svh;display:flex;align-items:center;padding:140px 0 100px;position:relative;overflow:hidden}
+.hero{min-height:100svh;display:flex;align-items:center;padding:140px 0 100px;position:relative;overflow-x:clip}
 .hero-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:52px;align-items:center}
 .tag{display:inline-flex;align-items:center;gap:7px;padding:7px 16px;border:1px solid var(--line);border-radius:100px;background:var(--panel);font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--txt-2);margin-bottom:26px}
 .tag b{color:var(--blue-2)}
@@ -146,19 +146,18 @@ h2{font-size:clamp(1.95rem,3.9vw,3rem);margin-bottom:18px}
 #lore{padding:0;position:relative;background:transparent}
 .deep{position:relative;min-height:min(100svh,940px);overflow:hidden;background:transparent}
 .deep-art{position:absolute;inset:0;z-index:-3;overflow:hidden;contain:paint;
-  --deep-fade:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.02) 8%,rgba(0,0,0,.08) 15%,
-    rgba(0,0,0,.2) 22%,rgba(0,0,0,.38) 29%,rgba(0,0,0,.6) 36%,rgba(0,0,0,.82) 43%,#000 50%,
-    rgba(0,0,0,.82) 57%,rgba(0,0,0,.6) 64%,rgba(0,0,0,.38) 71%,rgba(0,0,0,.2) 78%,
-    rgba(0,0,0,.08) 85%,rgba(0,0,0,.02) 92%,transparent 100%);
+  --deep-fade:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.06) 4%,rgba(0,0,0,.22) 8%,
+    rgba(0,0,0,.5) 13%,rgba(0,0,0,.8) 18%,#000 23%,#000 77%,rgba(0,0,0,.8) 82%,
+    rgba(0,0,0,.5) 87%,rgba(0,0,0,.22) 92%,rgba(0,0,0,.06) 96%,transparent 100%);
   -webkit-mask-image:var(--deep-fade);mask-image:var(--deep-fade)}
 .deep-layer{position:absolute;inset:-4%}
 .deep-art picture{display:block;width:100%;height:100%}
 .deep-art img{width:100%;height:100%;object-fit:cover;object-position:50% 42%;transform:scale(1.06)}
 
 .deep::before{content:'';position:absolute;inset:0;z-index:-2;pointer-events:none;
-  background:linear-gradient(180deg,transparent 0%,rgba(14,46,92,.18) 7%,rgba(14,46,92,.26) 15%,
-    rgba(12,40,80,.12) 26%,transparent 40%,transparent 60%,rgba(12,40,80,.12) 74%,rgba(14,46,92,.26) 85%,
-    rgba(14,46,92,.18) 93%,transparent 100%);
+  background:linear-gradient(180deg,transparent 0%,rgba(14,46,92,.16) 5%,rgba(14,46,92,.22) 11%,
+    rgba(12,40,80,.1) 18%,transparent 28%,transparent 72%,rgba(12,40,80,.1) 82%,rgba(14,46,92,.22) 89%,
+    rgba(14,46,92,.16) 95%,transparent 100%);
   mix-blend-mode:screen}
 .deep::after{content:'';position:absolute;inset:0;z-index:-2;pointer-events:none;
   background:radial-gradient(70% 48% at 50% 22%,rgba(150,205,225,.09),transparent 62%)}
