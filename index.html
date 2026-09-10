@@ -205,30 +205,37 @@ h2{font-size:clamp(1.95rem,3.9vw,3rem);margin-bottom:18px}
   font-family:var(--mono);font-size:12px;color:var(--teal);opacity:.7}
 
 /* serviços — lista, não cartão */
-.svc{border-top:1px solid var(--line)}
-.svc>div{display:grid;grid-template-columns:minmax(200px,.42fr) 1fr;gap:40px;align-items:baseline;
-  padding:34px 0;border-bottom:1px solid var(--line)}
-.svc dt{font-family:'Space Grotesk';font-size:1.5rem;font-weight:500;letter-spacing:-.02em;color:var(--txt)}
-.svc dd{color:var(--txt-2);font-weight:300;font-size:15px;max-width:62ch}
+.deck{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+.pnl{position:relative;overflow:hidden;border-radius:20px;padding:32px 30px 30px;
+  border:1px solid var(--line);background:linear-gradient(168deg,rgba(12,32,52,.62),rgba(4,12,22,.5));
+  clip-path:inset(0 0 100% 0);transition:clip-path .85s var(--ease),border-color .4s}
+.pnl.in{clip-path:inset(0 0 0 0)}
+.pnl:nth-child(1),.pnl:nth-child(4){grid-column:span 7}
+.pnl:nth-child(2),.pnl:nth-child(3){grid-column:span 5}
+.pnl::before{content:'';position:absolute;left:24px;right:24px;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(127,198,222,.55),transparent);opacity:.6;transition:opacity .4s}
+.pnl::after{content:'';position:absolute;inset:-40%;pointer-events:none;opacity:0;transition:opacity .5s;
+  background:conic-gradient(from 0deg,transparent 0deg,rgba(127,198,222,.13) 24deg,transparent 60deg);
+  animation:sweep 6s linear infinite;animation-play-state:paused}
+.pnl:hover{border-color:rgba(127,198,222,.34)}
+.pnl:hover::before{opacity:1}
+.pnl:hover::after{opacity:1;animation-play-state:running}
+@keyframes sweep{to{transform:rotate(360deg)}}
+.pnl h3{font-family:'Space Grotesk';font-size:1.46rem;font-weight:500;letter-spacing:-.02em;margin-bottom:12px;position:relative}
+.pnl p{color:var(--txt-2);font-weight:300;font-size:14.8px;max-width:52ch;position:relative}
+.pnl .sig{position:absolute;right:26px;top:26px;font-family:var(--mono);font-size:11px;color:var(--teal);opacity:.5}
 
 /* cards */
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px}
-#servicos .cards{grid-template-columns:repeat(2,1fr)}
-#servicos .card{padding:38px 34px 34px}
-.card{position:relative;padding:34px 30px 32px;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
-  background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));transition:.45s var(--ease)}
-.card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .4s;pointer-events:none;
-  background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),rgba(31,107,255,.15),transparent 62%)}
-.card:hover{border-color:rgba(127,198,222,.3)}
-.card:hover::before{opacity:1}
-.ico{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;margin-bottom:22px;
-  background:linear-gradient(140deg,rgba(31,107,255,.22),rgba(127,198,222,.07));border:1px solid rgba(74,155,255,.3)}
-.ico svg{width:21px;height:21px;stroke:var(--blue-2);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.card h3{font-size:1.2rem;margin-bottom:11px}
-.card p{font-size:14.3px;color:var(--txt-2);font-weight:300}
-.card .meta{margin-top:20px;padding-top:16px;border-top:1px solid var(--line);font-family:var(--mono);
-  font-size:11.5px;color:var(--txt-3);letter-spacing:.02em;line-height:1.8}
-.card .meta s{text-decoration:none;color:var(--blue-2);opacity:.6;margin:0 7px}
+.creed{list-style:none}
+.creed li{padding:22px 0 22px 22px;border-left:1px solid var(--line);position:relative}
+.creed li::before{content:'';position:absolute;left:-1px;top:22px;bottom:22px;width:1px;background:var(--teal);
+  transform:scaleY(0);transform-origin:top;transition:transform .6s var(--ease)}
+.creed.in li::before{transform:scaleY(1)}
+.creed li:nth-child(2)::before{transition-delay:.12s}
+.creed li:nth-child(3)::before{transition-delay:.24s}
+.creed b{display:block;font-family:'Space Grotesk';font-size:1.1rem;font-weight:500;margin-bottom:6px}
+.creed span{font-size:14.4px;color:var(--txt-2);font-weight:300}
+
 
 /* forja */
 .steps{border:none;display:block;position:relative;margin-left:6px}
@@ -236,8 +243,11 @@ h2{font-size:clamp(1.95rem,3.9vw,3rem);margin-bottom:18px}
 .step:last-child{padding-bottom:0}
 .step::before{content:'';position:absolute;left:0;top:9px;bottom:-9px;width:1px;background:rgba(127,198,222,.22)}
 .step:last-child::before{display:none}
-.step::after{content:attr(data-step);position:absolute;left:-3px;top:3px;width:7px;height:7px;border-radius:50%;
-  background:var(--teal);font-size:0;color:transparent;transition:none}
+.step::after{content:'';position:absolute;left:-3.5px;top:3px;width:8px;height:8px;border-radius:50%;
+  background:var(--teal);box-shadow:0 0 0 0 rgba(127,198,222,.5)}
+.step.lit::after{animation:ping 2.6s cubic-bezier(.16,1,.3,1) 1}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(127,198,222,.55)}70%{box-shadow:0 0 0 16px rgba(127,198,222,0)}
+  100%{box-shadow:0 0 0 0 rgba(127,198,222,0)}}
 .step:hover{background:none}
 .step svg{display:none}
 .step b{font-size:12.5px;color:var(--teal);font-weight:400;display:block}
@@ -286,13 +296,12 @@ h2{font-size:clamp(1.95rem,3.9vw,3rem);margin-bottom:18px}
 .row:hover .n{color:var(--blue-2)}
 
 /* cta */
-.cta{border:1px solid var(--line);border-radius:26px;padding:74px 50px;text-align:center;position:relative;overflow:hidden;
-  background:radial-gradient(90% 130% at 50% 0%,rgba(31,107,255,.2),transparent 62%),var(--bg-2)}
-.shield{position:absolute;left:50%;top:-30px;translate:-50% 0;width:300px;opacity:.07;pointer-events:none}
-.cta h2{font-size:clamp(1.95rem,4.1vw,3.1rem);position:relative}
-.cta p{color:var(--txt-2);max-width:520px;margin:16px auto 34px;font-weight:300;position:relative}
-.cta-btns{display:flex;gap:13px;justify-content:center;flex-wrap:wrap;position:relative}
-.fine{margin-top:26px;font-size:12px;color:var(--txt-3);position:relative}
+.cta{position:relative;overflow:hidden;padding:96px 0 92px;text-align:left;
+  border-top:1px solid var(--line);background:none}
+.cta h2{font-size:clamp(2.1rem,5.2vw,3.6rem);max-width:16ch}
+.cta p{color:var(--txt-2);max-width:52ch;margin:18px 0 32px;font-weight:300}
+.cta-btns{display:flex;gap:13px;flex-wrap:wrap}
+.fine{margin-top:24px;font-size:12.5px;color:var(--txt-3)}
 
 /* footer */
 footer{border-top:1px solid var(--line);padding:56px 0 40px}
@@ -320,12 +329,11 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px}
   .pane .punch,.pane-a .punch{border-right:none;border-left:2px solid #a8dcee;padding:0 0 0 16px}
   .deep-cap{display:none}
   .hero{min-height:auto;padding:120px 0 80px}
-  .hero-grid,#servicos .cards{grid-template-columns:1fr;gap:44px}
+  .hero-grid{grid-template-columns:1fr;gap:44px}
   .mark{width:min(58%,270px)}
   .r1{width:min(88%,300px)}.r2{width:min(68%,232px)}.r3{width:min(108%,360px)}
   .hero-art .halo{width:120%}
   h1{font-size:clamp(2.4rem,6.4vw,3.4rem)}
-  #servicos .cards{gap:16px}
   .hero-art{order:1;margin-top:8px}
   .links,.nav-cta{display:none}.burger{display:flex}
   .motes i:nth-child(n+5){display:none}
@@ -339,11 +347,15 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px}
   .row{grid-template-columns:44px 1fr;gap:14px;padding:24px 6px}
   .row .k,.row svg{display:none}
   .row:hover{padding-left:10px}
+  .creed li{padding:18px 0 18px 18px}
   .sounded>.wrap{padding-left:24px}
   .sounded>.wrap::before{left:0;opacity:.5}
   .sounded>.wrap::after{position:static;display:block;width:auto;text-align:left;margin-bottom:10px}
-  .svc>div{grid-template-columns:1fr;gap:10px;padding:26px 0}
-  .svc dt{font-size:1.2rem}
+  .deck{grid-template-columns:1fr;gap:12px}
+  .pnl{grid-column:auto!important;padding:26px 22px;border-radius:16px}
+  .pnl h3{font-size:1.2rem}
+  .pnl .sig{right:20px;top:20px}
+  .cta{padding:62px 0 58px}
   .cta{padding:52px 24px}
   .glow{display:none}
 }
@@ -373,10 +385,6 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px}
   .deep-stage{padding:96px 0 76px}
   .pane h3{font-size:1.24rem}
   .pane-b{margin-top:44px}
-  .card{padding:28px 22px 26px;border-radius:16px}
-  .card .idx{top:18px;right:20px}
-  .card h3{font-size:1.1rem}
-  .card .meta{font-size:11px;line-height:1.9}
   .steps{border-radius:16px}
   .step{padding:26px 22px}
   .step::after{font-size:4.2rem;bottom:-10px;right:14px}
@@ -518,16 +526,20 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px}
   <div class="head"><div class="eyebrow">O que fazemos</div>
     <h2>Do primeiro commit<br>ao domínio no ar.</h2>
     <p class="sub">Somos desenvolvedores. Escrevemos o código, subimos o servidor e mantemos tudo funcionando. O design vem depois da engenharia, para deixar o sistema apresentável — não no lugar dela.</p></div>
-  <dl class="svc">
-    <div><dt>Sistemas sob medida</dt>
-      <dd>Painel de gestão, área logada para o cliente, controle de acesso, relatórios. Quando a planilha e o sistema de prateleira já não dão conta, a gente escreve o que sua operação realmente faz.</dd></div>
-    <div><dt>Integrações e automações</dt>
-      <dd>Conversamos com o que você já usa: emissor de nota, ERP, WhatsApp, meios de pagamento, planilhas. Tarefa repetida vira rotina automática.</dd></div>
-    <div><dt>Sites e landing pages</dt>
-      <dd>A vitrine do sistema. Carrega rápido, funciona no celular, aparece na busca — e quando precisa, puxa dados direto do painel em vez de virar uma página parada.</dd></div>
-    <div><dt>Sustentação</dt>
-      <dd>Servidor, domínio, backup, atualização de segurança e ajuste conforme o negócio muda. Depois da entrega o telefone continua atendendo.</dd></div>
-  </dl>
+  <div class="deck">
+    <article class="pnl rv"><span class="sig">01</span>
+      <h3>Sistemas sob medida</h3>
+      <p>Painel de gestão, área logada para o cliente, controle de acesso, relatórios. Quando a planilha e o sistema de prateleira já não dão conta, a gente escreve o que sua operação realmente faz.</p></article>
+    <article class="pnl rv"><span class="sig">02</span>
+      <h3>Integrações e automações</h3>
+      <p>Conversamos com o que você já usa: emissor de nota, ERP, WhatsApp, meios de pagamento, planilhas. Tarefa repetida vira rotina automática.</p></article>
+    <article class="pnl rv"><span class="sig">03</span>
+      <h3>Sites e landing pages</h3>
+      <p>A vitrine do sistema. Carrega rápido, funciona no celular e puxa dados direto do painel em vez de virar página parada.</p></article>
+    <article class="pnl rv"><span class="sig">04</span>
+      <h3>Sustentação</h3>
+      <p>Servidor, domínio, backup, atualização de segurança e ajuste conforme o negócio muda. Depois da entrega o telefone continua atendendo.</p></article>
+  </div>
 </div>
 </div></section>
 
@@ -596,17 +608,15 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px}
     <p class="sub" style="margin-top:16px">Resposta rápida, escopo honesto e acabamento de agência grande — no ritmo de quem está construindo reputação e não pode entregar nada morno.</p>
     <div class="hero-cta"><a class="btn btn-g" href="#contato">Chamar a tripulação</a></div>
   </div>
-  <div class="cards" style="grid-template-columns:1fr">
-    <div class="card"><h3>Forjado à mão</h3><p>Código próprio, sem builder travando o que você pode fazer depois.</p></div>
-    <div class="card"><h3>Rápido de verdade</h3><p>Performance e responsividade tratadas como requisito, não como extra.</p></div>
-    <div class="card"><h3>O leme é seu</h3><p>Entregamos código, acessos e domínio no seu nome. Sem refém.</p></div>
-  </div>
+  <ul class="creed rv">
+    <li><b>Forjado à mão</b><span>Código próprio, sem builder travando o que você pode fazer depois.</span></li>
+    <li><b>Rápido de verdade</b><span>Performance e responsividade tratadas como requisito, não como extra.</span></li>
+    <li><b>O leme é seu</b><span>Entregamos código, acessos e domínio no seu nome. Sem refém.</span></li>
+  </ul></div>
 </div></div></section>
 
 <section id="contato" class="sounded"><div class="wrap" data-m="2 400 m"><div class="cta">
-  <svg class="shield" viewBox="0 0 100 120" fill="none" stroke="#4a9bff" stroke-width="2" aria-hidden="true">
-    <path d="M50 4l44 18v40c0 30-20 46-44 54C26 108 6 92 6 62V22z"/><path d="M50 20v78M20 40h60"/></svg>
-  <div class="eyebrow" style="text-align:center">Começar</div>
+  <div class="eyebrow">Começar</div>
   <h2>Traga a ideia.<br>A gente traça a rota.</h2>
   <p>Primeira conversa e orçamento sem custo. Diga em uma frase o que sua empresa faz — o resto a gente conduz.</p>
   <div class="cta-btns">
@@ -677,6 +687,14 @@ const io=new IntersectionObserver(es=>es.forEach((e,i)=>{
   if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*70);io.unobserve(e.target)}
 }),{threshold:.12,rootMargin:'0px 0px -8%'});
 document.querySelectorAll('.rv').forEach(e=>io.observe(e));
+
+const steps=[...document.querySelectorAll('.step')];
+if(steps.length){
+  const so=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('lit');so.unobserve(e.target)}
+  }),{threshold:.6});
+  steps.forEach(el=>so.observe(el));
+}
 
 document.querySelectorAll('.card').forEach(c=>{
   let cr=null,cx=0,cy=0,cq=false;
