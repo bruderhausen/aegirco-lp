@@ -197,6 +197,20 @@ h2{font-size:clamp(1.95rem,3.9vw,3rem);margin-bottom:18px}
 .deep-cap{position:absolute;left:0;right:0;bottom:26px;text-align:center;font-family:var(--mono);
   font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(180,210,225,.38);z-index:1}
 
+/* linha de prumo — a descida continua abaixo da pintura */
+.sounded>.wrap{position:relative;padding-left:118px}
+.sounded>.wrap::before{content:'';position:absolute;left:46px;top:8px;bottom:0;width:1px;
+  background:linear-gradient(180deg,transparent,rgba(127,198,222,.3) 7%,rgba(127,198,222,.14) 72%,transparent)}
+.sounded>.wrap::after{content:attr(data-m);position:absolute;left:0;top:0;width:82px;text-align:right;
+  font-family:var(--mono);font-size:12px;color:var(--teal);opacity:.7}
+
+/* serviços — lista, não cartão */
+.svc{border-top:1px solid var(--line)}
+.svc>div{display:grid;grid-template-columns:minmax(200px,.42fr) 1fr;gap:40px;align-items:baseline;
+  padding:34px 0;border-bottom:1px solid var(--line)}
+.svc dt{font-family:'Space Grotesk';font-size:1.5rem;font-weight:500;letter-spacing:-.02em;color:var(--txt)}
+.svc dd{color:var(--txt-2);font-weight:300;font-size:15px;max-width:62ch}
+
 /* cards */
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px}
 #servicos .cards{grid-template-columns:repeat(2,1fr)}
@@ -217,18 +231,18 @@ h2{font-size:clamp(1.95rem,3.9vw,3rem);margin-bottom:18px}
 .card .meta s{text-decoration:none;color:var(--blue-2);opacity:.6;margin:0 7px}
 
 /* forja */
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));border:1px solid var(--line);
-  border-radius:var(--r);overflow:hidden}
-.step{padding:34px 26px;border-right:1px solid var(--line);transition:.4s var(--ease);position:relative;overflow:hidden}
-.step::after{content:attr(data-step);position:absolute;right:8px;bottom:-26px;font-family:'Space Grotesk';
-  font-size:6rem;font-weight:700;line-height:1;color:rgba(255,255,255,.028);transition:.5s var(--ease)}
-.step:hover::after{color:rgba(74,155,255,.12);bottom:-16px}
-.step:last-child{border-right:none}
-.step:hover{background:linear-gradient(180deg,rgba(31,107,255,.09),transparent)}
-.step svg{width:26px;height:28px;stroke:var(--blue-2);fill:none;stroke-width:1.5;margin-bottom:18px}
+.steps{border:none;display:block;position:relative;margin-left:6px}
+.step{padding:0 0 34px 34px;border:none;position:relative}
+.step:last-child{padding-bottom:0}
+.step::before{content:'';position:absolute;left:0;top:9px;bottom:-9px;width:1px;background:rgba(127,198,222,.22)}
+.step:last-child::before{display:none}
+.step::after{content:attr(data-step);position:absolute;left:-3px;top:3px;width:7px;height:7px;border-radius:50%;
+  background:var(--teal);font-size:0;color:transparent;transition:none}
+.step:hover{background:none}
+.step svg{display:none}
 .step b{font-size:12.5px;color:var(--teal);font-weight:400;display:block}
-.step h3{font-size:1.08rem;margin:8px 0 9px}
-.step p{font-size:13.5px;color:var(--txt-2);font-weight:300}
+.step h3{font-size:1.28rem;margin:6px 0 8px;font-weight:500}
+.step p{font-size:14.6px;color:var(--txt-2);font-weight:300;max-width:60ch}
 
 /* log — mar e código no mesmo lugar */
 .term{margin-top:22px;border:1px solid var(--line);border-radius:16px;overflow:hidden;
@@ -325,6 +339,11 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px}
   .row{grid-template-columns:44px 1fr;gap:14px;padding:24px 6px}
   .row .k,.row svg{display:none}
   .row:hover{padding-left:10px}
+  .sounded>.wrap{padding-left:24px}
+  .sounded>.wrap::before{left:0;opacity:.5}
+  .sounded>.wrap::after{position:static;display:block;width:auto;text-align:left;margin-bottom:10px}
+  .svc>div{grid-template-columns:1fr;gap:10px;padding:26px 0}
+  .svc dt{font-size:1.2rem}
   .cta{padding:52px 24px}
   .glow{display:none}
 }
@@ -495,27 +514,24 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px}
   <span>Social Media</span><span class="hl">•</span><span>Integrações e APIs</span><span class="hl">•</span>
 </div></div>
 
-<section id="servicos"><div class="wrap">
+<section id="servicos" class="sounded"><div class="wrap" data-m="40 m">
   <div class="head"><div class="eyebrow">O que fazemos</div>
     <h2>Do primeiro commit<br>ao domínio no ar.</h2>
     <p class="sub">Somos desenvolvedores. Escrevemos o código, subimos o servidor e mantemos tudo funcionando. O design vem depois da engenharia, para deixar o sistema apresentável — não no lugar dela.</p></div>
-  <div class="cards">
-    <article class="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M8 6l-5 6 5 6M16 6l5 6-5 6M13 4l-2 16"/></svg></div>
-      <h3>Sistemas sob medida</h3>
-      <p>Painel de gestão, área logada para o cliente, controle de acesso, relatórios. Quando a planilha e o sistema de prateleira já não dão conta, a gente escreve o que sua operação realmente faz.</p></article>
-    <article class="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/><circle cx="19" cy="17" r="2.4"/></svg></div>
-      <h3>Integrações e automações</h3>
-      <p>Conversamos com o que você já usa: emissor de nota, ERP, WhatsApp, meios de pagamento, planilhas. Tarefa repetida vira rotina automática.</p></article>
-    <article class="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M3 5h18v14H3z"/><path d="M3 9h18M7 13h6"/></svg></div>
-      <h3>Sites e landing pages</h3>
-      <p>A vitrine do sistema. Carrega rápido, funciona no celular, aparece na busca — e quando precisa, puxa dados direto do painel em vez de virar uma página parada.</p></article>
-    <article class="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v6c0 5-3.5 7.5-8 8-4.5-.5-8-3-8-8V7z"/><path d="M9 12l2 2 4-4"/></svg></div>
-      <h3>Sustentação</h3>
-      <p>Servidor, domínio, backup, atualização de segurança e ajuste conforme o negócio muda. Depois da entrega o telefone continua atendendo.</p></article>
-  </div>
+  <dl class="svc">
+    <div><dt>Sistemas sob medida</dt>
+      <dd>Painel de gestão, área logada para o cliente, controle de acesso, relatórios. Quando a planilha e o sistema de prateleira já não dão conta, a gente escreve o que sua operação realmente faz.</dd></div>
+    <div><dt>Integrações e automações</dt>
+      <dd>Conversamos com o que você já usa: emissor de nota, ERP, WhatsApp, meios de pagamento, planilhas. Tarefa repetida vira rotina automática.</dd></div>
+    <div><dt>Sites e landing pages</dt>
+      <dd>A vitrine do sistema. Carrega rápido, funciona no celular, aparece na busca — e quando precisa, puxa dados direto do painel em vez de virar uma página parada.</dd></div>
+    <div><dt>Sustentação</dt>
+      <dd>Servidor, domínio, backup, atualização de segurança e ajuste conforme o negócio muda. Depois da entrega o telefone continua atendendo.</dd></div>
+  </dl>
+</div>
 </div></section>
 
-<section id="forja"><div class="wrap">
+<section id="forja" class="sounded"><div class="wrap" data-m="120 m">
   <div class="head"><div class="eyebrow">Como trabalhamos</div>
     <h2>Simples de acompanhar.<br>Sério na execução.</h2>
     <p class="sub">Quatro etapas claras, prazo combinado e link de preview atualizado a cada push — você acompanha cada versão.</p></div>
@@ -541,7 +557,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px}
   </div>
 </div></section>
 
-<section id="salao"><div class="wrap">
+<section id="salao" class="sounded"><div class="wrap" data-m="380 m">
   <div class="head"><div class="eyebrow">O que entregamos</div>
     <h2>Projetos que<br>seguram o olhar.</h2>
     <p class="sub">Cada projeto nasce do zero, com a cara do cliente — não de um tema pronto revendido para outras dez empresas.</p></div>
@@ -573,7 +589,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px}
   </div>
 </div></section>
 
-<section id="tripulacao"><div class="wrap"><div class="hero-grid">
+<section id="tripulacao" class="sounded"><div class="wrap" data-m="900 m"><div class="hero-grid">
   <div class="rv"><div class="eyebrow">Quem constrói</div>
     <h2>Time pequeno,<br>obcecado por detalhe.</h2>
     <p class="sub" style="margin-top:18px">A Aegir Co. nasceu de um grupo de amigos desenvolvedores cansados de ver empresa boa com site ruim. Somos enxutos de propósito: sem camada de burocracia, sem gerente repassando recado. Você fala com quem desenha e com quem programa.</p>
@@ -587,7 +603,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px}
   </div>
 </div></div></section>
 
-<section id="contato"><div class="wrap"><div class="cta">
+<section id="contato" class="sounded"><div class="wrap" data-m="2 400 m"><div class="cta">
   <svg class="shield" viewBox="0 0 100 120" fill="none" stroke="#4a9bff" stroke-width="2" aria-hidden="true">
     <path d="M50 4l44 18v40c0 30-20 46-44 54C26 108 6 92 6 62V22z"/><path d="M50 20v78M20 40h60"/></svg>
   <div class="eyebrow" style="text-align:center">Começar</div>
