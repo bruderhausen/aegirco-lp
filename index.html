@@ -98,7 +98,8 @@ header.on nav{height:64px}
 /* ── hero ─────────────────────────────────── */
 .hero{min-height:100svh;display:flex;align-items:center;padding:140px 0 100px;position:relative;overflow-x:clip}
 .hero-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:52px;align-items:center}
-.tag{display:inline-flex;align-items:center;gap:7px;padding:7px 16px;border:1px solid var(--line);border-radius:100px;background:var(--panel);font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--txt-2);margin-bottom:26px}
+.tag{display:inline-block;padding:6px 15px;border:1px solid var(--line);border-radius:100px;
+  background:var(--panel);font-size:13px;color:var(--teal);margin-bottom:24px}
 .tag b{color:var(--blue-2)}
 h1{font-size:clamp(2.5rem,5.2vw,4.3rem);margin-bottom:26px;font-weight:600}
 h1 em{font-style:normal;background:linear-gradient(100deg,#fff 6%,#a9ccff 38%,#1f6bff 66%,#25d0c0 92%);
@@ -120,11 +121,12 @@ h1 em{font-style:normal;background:linear-gradient(100deg,#fff 6%,#a9ccff 38%,#1
 .orbit{position:absolute;width:min(104%,470px);aspect-ratio:1;animation:spin 30s linear infinite}
 .orbit i{position:absolute;top:-4px;left:50%;width:7px;height:7px;border-radius:50%;background:var(--teal);
   box-shadow:0 0 14px var(--teal);translate:-50% 0}
+.stack{margin-top:20px;font-family:var(--mono);font-size:12px;color:var(--txt-3);line-height:1.9;max-width:520px}
 .stats{display:flex;gap:0;margin-top:52px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:22px}
 .stat{padding-right:36px;margin-right:36px;border-right:1px solid var(--line)}
 .stat:last-child{border-right:none;margin-right:0;padding-right:0}
 .stat b{font-family:'Space Grotesk';font-size:1.8rem;display:block;font-weight:500;letter-spacing:-.02em}
-.stat span{font-family:var(--mono);font-size:10.5px;color:var(--txt-3);letter-spacing:.1em;text-transform:uppercase}
+.stat span{font-size:13px;color:var(--txt-3)}
 
 /* ── ondas ────────────────────────────────── */
 .waves{position:relative;height:110px;overflow:hidden;margin:-40px 0 -1px;
@@ -141,9 +143,7 @@ h1 em{font-style:normal;background:linear-gradient(100deg,#fff 6%,#a9ccff 38%,#1
 
 /* ── seções ───────────────────────────────── */
 section{padding:118px 0;position:relative;contain:layout style}
-.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue-2);
-  margin-bottom:16px;display:flex;align-items:center;gap:10px}
-.eyebrow::before{content:'';width:26px;height:1px;background:linear-gradient(90deg,var(--blue-2),var(--teal))}
+.eyebrow{font-size:14px;color:var(--teal);margin-bottom:10px;font-weight:400}
 h2{font-size:clamp(1.95rem,3.9vw,3rem);margin-bottom:18px}
 .sub{color:var(--txt-2);max-width:620px;font-weight:300}
 .head{margin-bottom:56px}
@@ -205,16 +205,13 @@ h2{font-size:clamp(1.95rem,3.9vw,3rem);margin-bottom:18px}
   background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));transition:.45s var(--ease)}
 .card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .4s;pointer-events:none;
   background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),rgba(31,107,255,.15),transparent 62%)}
-.card:hover{border-color:rgba(74,155,255,.42);transform:translateY(-5px)}
+.card:hover{border-color:rgba(127,198,222,.3)}
 .card:hover::before{opacity:1}
 .ico{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;margin-bottom:22px;
   background:linear-gradient(140deg,rgba(31,107,255,.22),rgba(127,198,222,.07));border:1px solid rgba(74,155,255,.3)}
 .ico svg{width:21px;height:21px;stroke:var(--blue-2);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .card h3{font-size:1.2rem;margin-bottom:11px}
 .card p{font-size:14.3px;color:var(--txt-2);font-weight:300}
-.card .idx{position:absolute;top:22px;right:26px;font-family:var(--mono);font-size:11px;color:var(--txt-3);
-  letter-spacing:.1em;transition:.4s var(--ease)}
-.card:hover .idx{color:var(--blue-2)}
 .card .meta{margin-top:20px;padding-top:16px;border-top:1px solid var(--line);font-family:var(--mono);
   font-size:11.5px;color:var(--txt-3);letter-spacing:.02em;line-height:1.8}
 .card .meta s{text-decoration:none;color:var(--blue-2);opacity:.6;margin:0 7px}
@@ -229,7 +226,7 @@ h2{font-size:clamp(1.95rem,3.9vw,3rem);margin-bottom:18px}
 .step:last-child{border-right:none}
 .step:hover{background:linear-gradient(180deg,rgba(31,107,255,.09),transparent)}
 .step svg{width:26px;height:28px;stroke:var(--blue-2);fill:none;stroke-width:1.5;margin-bottom:18px}
-.step b{font-family:var(--mono);font-size:10.5px;color:var(--txt-3);letter-spacing:.14em;display:block}
+.step b{font-size:12.5px;color:var(--teal);font-weight:400;display:block}
 .step h3{font-size:1.08rem;margin:8px 0 9px}
 .step p{font-size:13.5px;color:var(--txt-2);font-weight:300}
 
@@ -252,7 +249,7 @@ h2{font-size:clamp(1.95rem,3.9vw,3rem);margin-bottom:18px}
   mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
 .marq div{display:flex;gap:52px;animation:slide 36s linear infinite;flex-shrink:0}
 @keyframes slide{to{transform:translateX(calc(-100% - 52px))}}
-.marq span{font-family:var(--mono);font-size:12.5px;text-transform:lowercase;color:var(--txt-3);white-space:nowrap;letter-spacing:.05em}
+.marq span{font-size:14px;color:var(--txt-3);white-space:nowrap}
 .marq span.hl{color:var(--blue-2)}
 
 /* salão — índice editorial */
@@ -288,7 +285,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px}
 .f-grid{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;margin-bottom:38px}
 .f-brand img{width:150px;margin-bottom:16px}
 .f-grid p{font-size:13.5px;color:var(--txt-2);max-width:310px;font-weight:300}
-.f-col h4{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--txt-3);margin-bottom:16px;font-weight:500}
+.f-col h4{font-size:14px;color:var(--txt);margin-bottom:14px;font-weight:500}
 .f-col a{display:block;font-size:13.7px;color:var(--txt-2);margin-bottom:10px;transition:.25s}
 .f-col a:hover{color:var(--blue-2)}
 .f-bot{border-top:1px solid var(--line);padding-top:24px;display:flex;justify-content:space-between;gap:16px;
@@ -404,33 +401,33 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px}
 <header id="hdr"><div class="wrap"><nav>
   <a class="brand" href="#top"><img src="assets/aegir-logo.png" alt="Aegir Co." width="300" height="264" decoding="async"><b>AEGIR <i>CO.</i></b></a>
   <div class="links">
-    <a href="#lore">A saga</a><a href="#servicos">Arsenal</a><a href="#forja">A forja</a><a href="#salao">O salão</a><a href="#tripulacao">Tripulação</a>
+    <a href="#lore">A saga</a><a href="#servicos">Serviços</a><a href="#forja">Processo</a><a href="#salao">Projetos</a><a href="#tripulacao">Time</a>
   </div>
-  <a class="btn btn-p nav-cta" href="#contato">Zarpar com a gente</a>
+  <a class="btn btn-p nav-cta" href="#contato">Falar com a gente</a>
   <div class="burger" id="bg" role="button" aria-label="Menu"><span></span><span></span></div>
 </nav></div></header>
 
 <div class="mob" id="mob">
-  <a href="#lore">A saga</a><a href="#servicos">Arsenal</a><a href="#forja">A forja</a><a href="#salao">O salão</a><a href="#tripulacao">Tripulação</a>
-  <a class="btn btn-p" href="#contato">Zarpar com a gente</a>
+  <a href="#lore">A saga</a><a href="#servicos">Serviços</a><a href="#forja">Processo</a><a href="#salao">Projetos</a><a href="#tripulacao">Time</a>
+  <a class="btn btn-p" href="#contato">Falar com a gente</a>
 </div>
 
 <main id="top">
 <section class="hero"><div class="wrap"><div class="hero-grid">
   <div>
-    <span class="tag rv">Design <b>•</b> Desenvolvimento <b>•</b> Soluções</span>
-    <h1 class="rv">Ægir domava o mar.<br>A gente doma<br><em>o digital.</em></h1>
-    <p class="lead rv">Sites, sistemas e identidade visual sob medida — código próprio, acabamento de armaria e nenhum navio à deriva. Sua empresa merece chegar ao porto inteira.</p>
+    <span class="tag rv">Desenvolvimento de sistemas sob medida</span>
+    <h1 class="rv">Ægir domava o mar.<br>A gente escreve<br><em>o sistema.</em></h1>
+    <p class="lead rv">Painéis, áreas de cliente, integrações e os sites que conversam com eles. Tudo escrito por nós, em código que você é dono — nada de plataforma alugada ditando o que sua operação pode fazer.</p>
     <div class="hero-cta rv">
-      <a class="btn btn-p" href="#contato">Começar a travessia
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></a>
-      <a class="btn btn-g" href="#salao">Ver o salão</a>
+      <a class="btn btn-p" href="#contato">Falar sobre seu projeto</a>
+      <a class="btn btn-g" href="#salao">Ver o que construímos</a>
     </div>
     <div class="stats rv">
-      <div class="stat"><b data-n="100" data-suf="%">0</b><span>Código próprio</span></div>
-      <div class="stat"><b data-n="7" data-suf=" dias">0</b><span>Primeira entrega</span></div>
-      <div class="stat"><b data-n="48" data-suf="h">0</b><span>Orçamento</span></div>
+      <div class="stat"><b data-n="99" data-suf=",9%">0</b><span>disponibilidade</span></div>
+      <div class="stat"><b data-n="41" data-suf="s">0</b><span>do commit ao ar</span></div>
+      <div class="stat"><b data-n="0" data-suf="">0</b><span>plataforma alugada</span></div>
     </div>
+    <p class="stack rv">JavaScript e TypeScript · Node · PostgreSQL · APIs REST · Docker · deploy contínuo</p>
   </div>
   <div class="hero-art">
     <div class="halo"></div>
@@ -499,49 +496,41 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px}
 </div></div>
 
 <section id="servicos"><div class="wrap">
-  <div class="head rv"><div class="eyebrow">Arsenal</div>
+  <div class="head"><div class="eyebrow">O que fazemos</div>
     <h2>Do primeiro commit<br>ao domínio no ar.</h2>
-    <p class="sub">Somos desenvolvedores: escrevemos o código, cuidamos do servidor e mantemos no ar. O design entra a serviço disso, não no lugar disso.</p></div>
+    <p class="sub">Somos desenvolvedores. Escrevemos o código, subimos o servidor e mantemos tudo funcionando. O design vem depois da engenharia, para deixar o sistema apresentável — não no lugar dela.</p></div>
   <div class="cards">
-    <article class="card rv"><div class="ico"><svg viewBox="0 0 24 24"><path d="M3 5h18v14H3z"/><path d="M3 9h18M7 13h6"/></svg></div>
-      <span class="idx">01</span>
-      <h3>Sites &amp; Landing Pages</h3>
-      <p>Páginas rápidas, responsivas e feitas para converter. Design autoral, performance real e SEO técnico desde a fundação.</p>
-      <p class="meta">institucional<s>/</s>campanha<s>/</s>portfólio<s>/</s>SEO técnico</p></article>
-    <article class="card rv"><div class="ico"><svg viewBox="0 0 24 24"><path d="M8 6l-5 6 5 6M16 6l5 6-5 6M13 4l-2 16"/></svg></div>
-      <span class="idx">02</span>
-      <h3>Sistemas &amp; Aplicações</h3>
-      <p>Somos desenvolvedores: painéis administrativos, área de cliente, automações e integrações com o que sua operação já usa.</p>
-      <p class="meta">dashboards<s>/</s>login e permissões<s>/</s>APIs<s>/</s>automação</p></article>
-    <article class="card rv"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a14 14 0 000 18M3 12h18"/></svg></div>
-      <span class="idx">03</span>
-      <h3>Identidade &amp; Conteúdo</h3>
-      <p>Logo, paleta, tipografia e kit de posts consistente — a marca falando a mesma língua no site e nas redes.</p>
-      <p class="meta">identidade visual<s>/</s>social media<s>/</s>peças de campanha</p></article>
-    <article class="card rv"><div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v6c0 5-3.5 7.5-8 8-4.5-.5-8-3-8-8V7z"/><path d="M9 12l2 2 4-4"/></svg></div>
-      <span class="idx">04</span>
-      <h3>Escudo &amp; Manutenção</h3>
-      <p>Hospedagem, domínio, backup, atualização e ajuste contínuo. No ar, rápido e seguro — sem você se preocupar.</p>
-      <p class="meta">monitoramento<s>/</s>backups<s>/</s>melhorias contínuas</p></article>
+    <article class="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M8 6l-5 6 5 6M16 6l5 6-5 6M13 4l-2 16"/></svg></div>
+      <h3>Sistemas sob medida</h3>
+      <p>Painel de gestão, área logada para o cliente, controle de acesso, relatórios. Quando a planilha e o sistema de prateleira já não dão conta, a gente escreve o que sua operação realmente faz.</p></article>
+    <article class="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/><circle cx="19" cy="17" r="2.4"/></svg></div>
+      <h3>Integrações e automações</h3>
+      <p>Conversamos com o que você já usa: emissor de nota, ERP, WhatsApp, meios de pagamento, planilhas. Tarefa repetida vira rotina automática.</p></article>
+    <article class="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M3 5h18v14H3z"/><path d="M3 9h18M7 13h6"/></svg></div>
+      <h3>Sites e landing pages</h3>
+      <p>A vitrine do sistema. Carrega rápido, funciona no celular, aparece na busca — e quando precisa, puxa dados direto do painel em vez de virar uma página parada.</p></article>
+    <article class="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v6c0 5-3.5 7.5-8 8-4.5-.5-8-3-8-8V7z"/><path d="M9 12l2 2 4-4"/></svg></div>
+      <h3>Sustentação</h3>
+      <p>Servidor, domínio, backup, atualização de segurança e ajuste conforme o negócio muda. Depois da entrega o telefone continua atendendo.</p></article>
   </div>
 </div></section>
 
 <section id="forja"><div class="wrap">
-  <div class="head rv"><div class="eyebrow">A forja</div>
+  <div class="head"><div class="eyebrow">Como trabalhamos</div>
     <h2>Simples de acompanhar.<br>Sério na execução.</h2>
     <p class="sub">Quatro etapas claras, prazo combinado e link de preview atualizado a cada push — você acompanha cada versão.</p></div>
-  <div class="steps rv">
-    <div class="step" data-step="01"><svg viewBox="0 0 24 26"><path d="M4 24L12 2l8 22M8 12h9"/></svg><b>CONVERSA INICIAL</b>
+  <div class="steps">
+    <div class="step" data-step="01"><svg viewBox="0 0 24 26"><path d="M4 24L12 2l8 22M8 12h9"/></svg><b>Semana 1</b>
       <h3>Conversa</h3><p>Entendemos negócio, público e objetivo. Sem formulário frio — papo direto.</p></div>
-    <div class="step" data-step="02"><svg viewBox="0 0 24 26"><path d="M5 2v22M19 2v22M5 7l14 12"/></svg><b>ESCOPO NO PAPEL</b>
+    <div class="step" data-step="02"><svg viewBox="0 0 24 26"><path d="M5 2v22M19 2v22M5 7l14 12"/></svg><b>Antes de codar</b>
       <h3>Rota</h3><p>Escopo, prazo e valor no papel antes de qualquer linha de código. Nada de surpresa.</p></div>
-    <div class="step" data-step="03"><svg viewBox="0 0 24 26"><path d="M4 3l16 20M20 3L4 23"/></svg><b>MÃO NA MASSA</b>
+    <div class="step" data-step="03"><svg viewBox="0 0 24 26"><path d="M4 3l16 20M20 3L4 23"/></svg><b>Ciclos de uma semana</b>
       <h3>Construção</h3><p>Design aprovado, ciclos curtos de desenvolvimento e link de preview sempre atualizado.</p></div>
-    <div class="step" data-step="04"><svg viewBox="0 0 24 26"><path d="M6 24V2h8l5 5-5 5H6M14 12l5 12"/></svg><b>NO AR</b>
+    <div class="step" data-step="04"><svg viewBox="0 0 24 26"><path d="M6 24V2h8l5 5-5 5H6M14 12l5 12"/></svg><b>E depois dela</b>
       <h3>Zarpada</h3><p>Deploy, domínio, medição e acompanhamento. A entrega é o começo, não o fim.</p></div>
   </div>
-  <div class="term rv" data-par="-.05" aria-hidden="true">
-    <div class="term-bar"><i></i><i></i><i></i><span>aegir@deploy — travessia</span></div>
+  <div class="term" data-par="-.05" aria-hidden="true">
+    <div class="term-bar"><i></i><i></i><i></i><span>deploy.log</span></div>
     <pre><code><s>$</s> aegir build --projeto "cliente"
 <u>✓</u> escopo assinado, rota traçada
 <u>✓</u> 312 módulos empacotados <b>1.9s</b>
@@ -553,29 +542,29 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px}
 </div></section>
 
 <section id="salao"><div class="wrap">
-  <div class="head rv"><div class="eyebrow">O salão</div>
+  <div class="head"><div class="eyebrow">O que entregamos</div>
     <h2>Projetos que<br>seguram o olhar.</h2>
     <p class="sub">Cada projeto nasce do zero, com a cara do cliente — não de um tema pronto revendido para outras dez empresas.</p></div>
   <div class="rows">
-    <a class="row rv" href="#contato">
+    <a class="row" href="#contato">
       <span class="n">001</span>
       <span class="t"><b>Presença institucional</b><i>Páginas de serviço, provas sociais e contato direto. O cliente confia antes de falar com você.</i></span>
       <span class="k">site · SEO · CMS</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
     </a>
-    <a class="row rv" href="#contato">
+    <a class="row" href="#contato">
       <span class="n">002</span>
       <span class="t"><b>Landing de conversão</b><i>Uma página, um objetivo. Oferta clara, carregamento instantâneo, caminho curto até o botão.</i></span>
       <span class="k">landing · copy · analytics</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
     </a>
-    <a class="row rv" href="#contato">
+    <a class="row" href="#contato">
       <span class="n">003</span>
       <span class="t"><b>Plataforma sob medida</b><i>Área logada, painel de gestão, integrações. Quando o pronto não resolve, a gente constrói.</i></span>
       <span class="k">app · API · banco</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
     </a>
-    <a class="row rv" href="#contato">
+    <a class="row" href="#contato">
       <span class="n">004</span>
       <span class="t"><b>Marca e conteúdo</b><i>Identidade visual, kit de posts e peças de campanha falando a mesma língua do site.</i></span>
       <span class="k">logo · social · campanha</span>
@@ -585,28 +574,27 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px}
 </div></section>
 
 <section id="tripulacao"><div class="wrap"><div class="hero-grid">
-  <div class="rv"><div class="eyebrow">Tripulação</div>
+  <div class="rv"><div class="eyebrow">Quem constrói</div>
     <h2>Time pequeno,<br>obcecado por detalhe.</h2>
     <p class="sub" style="margin-top:18px">A Aegir Co. nasceu de um grupo de amigos desenvolvedores cansados de ver empresa boa com site ruim. Somos enxutos de propósito: sem camada de burocracia, sem gerente repassando recado. Você fala com quem desenha e com quem programa.</p>
     <p class="sub" style="margin-top:16px">Resposta rápida, escopo honesto e acabamento de agência grande — no ritmo de quem está construindo reputação e não pode entregar nada morno.</p>
     <div class="hero-cta"><a class="btn btn-g" href="#contato">Chamar a tripulação</a></div>
   </div>
-  <div class="cards rv" style="grid-template-columns:1fr">
+  <div class="cards" style="grid-template-columns:1fr">
     <div class="card"><h3>Forjado à mão</h3><p>Código próprio, sem builder travando o que você pode fazer depois.</p></div>
     <div class="card"><h3>Rápido de verdade</h3><p>Performance e responsividade tratadas como requisito, não como extra.</p></div>
     <div class="card"><h3>O leme é seu</h3><p>Entregamos código, acessos e domínio no seu nome. Sem refém.</p></div>
   </div>
 </div></div></section>
 
-<section id="contato"><div class="wrap"><div class="cta rv">
+<section id="contato"><div class="wrap"><div class="cta">
   <svg class="shield" viewBox="0 0 100 120" fill="none" stroke="#4a9bff" stroke-width="2" aria-hidden="true">
     <path d="M50 4l44 18v40c0 30-20 46-44 54C26 108 6 92 6 62V22z"/><path d="M50 20v78M20 40h60"/></svg>
-  <div class="eyebrow" style="justify-content:center">Zarpar</div>
+  <div class="eyebrow" style="text-align:center">Começar</div>
   <h2>Traga a ideia.<br>A gente traça a rota.</h2>
   <p>Primeira conversa e orçamento sem custo. Diga em uma frase o que sua empresa faz — o resto a gente conduz.</p>
   <div class="cta-btns">
-    <a class="btn btn-p" href="https://wa.me/5500000000000?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20Aegir%20Co." target="_blank" rel="noopener">Chamar no WhatsApp
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></a>
+    <a class="btn btn-p" href="https://wa.me/5500000000000?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20Aegir%20Co." target="_blank" rel="noopener">Chamar no WhatsApp</a>
     <a class="btn btn-g" href="mailto:aegircoo@gmail.com?subject=Projeto%20novo">aegircoo@gmail.com</a>
   </div>
   <p class="fine">Orçamento em até 48h • Escopo e prazo por escrito antes de iniciar</p>
@@ -617,8 +605,8 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px}
   <div class="f-grid">
     <div class="f-brand"><img src="assets/aegir-nome.png" alt="Aegir Co." width="600" height="95" loading="lazy" decoding="async">
       <p>Ægir dominava o mar e servia a melhor bebida dos nove mundos. Mantemos a tradição — a bebida fica para a entrega do projeto.</p></div>
-    <div class="f-col"><h4>Arsenal</h4><a href="#servicos">Sites e landing pages</a><a href="#servicos">Sistemas web</a><a href="#servicos">Identidade visual</a><a href="#servicos">Social media</a></div>
-    <div class="f-col"><h4>Empresa</h4><a href="#lore">A saga</a><a href="#forja">A forja</a><a href="#salao">O salão</a><a href="#tripulacao">Tripulação</a></div>
+    <div class="f-col"><h4>Serviços</h4><a href="#servicos">Sistemas sob medida</a><a href="#servicos">Integrações e automações</a><a href="#servicos">Sites e landing pages</a><a href="#servicos">Sustentação</a></div>
+    <div class="f-col"><h4>Empresa</h4><a href="#lore">A saga</a><a href="#forja">Processo</a><a href="#salao">Projetos</a><a href="#tripulacao">Time</a></div>
     <div class="f-col"><h4>Contato</h4><a href="mailto:aegircoo@gmail.com">aegircoo@gmail.com</a><a href="https://wa.me/5500000000000" target="_blank" rel="noopener">WhatsApp</a><a href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a></div>
   </div>
   <div class="f-bot"><span>© <span id="yr">2026</span> Aegir Co. Todos os direitos reservados.</span><span>Feito com código próprio, no Brasil.</span></div>
