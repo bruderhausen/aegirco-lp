@@ -45,11 +45,15 @@ h1,h2,h3{font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.04;lette
 .b3{bottom:-26vh;background:radial-gradient(60% 48% at 48% 50%,rgba(8,38,72,.5),transparent 72%);
   animation:sway 58s ease-in-out infinite}
 @keyframes sway{0%,100%{transform:translate3d(-4vw,0,0)}50%{transform:translate3d(5vw,3vh,0)}}
-.grid-bg{position:fixed;inset:0;z-index:-1;pointer-events:none;
-  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
-  background-size:68px 68px;opacity:.55;transform:translateZ(0);
-  -webkit-mask-image:radial-gradient(ellipse 78% 58% at 50% 0%,#000 8%,transparent 76%);
-  mask-image:radial-gradient(ellipse 78% 58% at 50% 0%,#000 8%,transparent 76%)}
+.depth{position:fixed;inset:-25% 0;z-index:-1;pointer-events:none;will-change:transform;
+  background:linear-gradient(180deg,rgba(126,178,205,.1) 0%,rgba(20,58,96,.16) 16%,transparent 42%,
+    rgba(2,8,18,.5) 74%,rgba(1,4,10,.85) 100%)}
+.motes{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.motes i{position:absolute;bottom:-24px;border-radius:50%;opacity:.5;
+  background:radial-gradient(circle at 34% 30%,rgba(255,255,255,.4),rgba(160,205,225,.1) 55%,transparent 72%);
+  animation:drift-up linear infinite}
+@keyframes drift-up{0%{transform:translate3d(0,0,0) scale(.7);opacity:0}
+  18%{opacity:.5}80%{opacity:.3}100%{transform:translate3d(18px,-118vh,0) scale(1.1);opacity:0}}
 .noise{position:fixed;inset:0;z-index:998;pointer-events:none;opacity:.03;contain:strict;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
 .glow{position:fixed;top:0;left:0;width:520px;height:520px;margin:-260px 0 0 -260px;border-radius:50%;
@@ -229,6 +233,19 @@ h2{font-size:clamp(1.95rem,3.9vw,3rem);margin-bottom:18px}
 .step h3{font-size:1.08rem;margin:8px 0 9px}
 .step p{font-size:13.5px;color:var(--txt-2);font-weight:300}
 
+/* log — mar e código no mesmo lugar */
+.term{margin-top:22px;border:1px solid var(--line);border-radius:16px;overflow:hidden;
+  background:linear-gradient(180deg,rgba(8,22,38,.72),rgba(4,12,22,.6))}
+.term-bar{display:flex;align-items:center;gap:6px;padding:11px 16px;border-bottom:1px solid var(--line)}
+.term-bar i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.16)}
+.term-bar span{font-family:var(--mono);font-size:10.5px;color:var(--txt-3);letter-spacing:.1em;margin-left:10px}
+.term pre{padding:20px 22px;overflow-x:auto}
+.term code{font-family:var(--mono);font-size:12.4px;line-height:2;color:var(--txt-2);white-space:pre}
+.term s{text-decoration:none;color:var(--blue-2)}
+.term u{text-decoration:none;color:var(--teal)}
+.term e{color:var(--ember)}
+.term b{color:var(--txt);font-weight:500}
+
 /* marquee */
 .marq{border-block:1px solid var(--line);padding:24px 0;overflow:hidden;display:flex;gap:52px;
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
@@ -367,7 +384,8 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px}
 <body>
 <div class="prog" id="prog"></div>
 <div class="bg"><div class="beam b1"></div><div class="beam b2"></div><div class="beam b3"></div></div>
-<div class="grid-bg"></div><div class="glow" id="glow"></div><div class="noise"></div>
+<div class="depth" data-par=".12"></div>
+<div class="motes" aria-hidden="true"><i style="left:6%;width:4px;height:4px;animation-duration:34s;animation-delay:-4s"></i><i style="left:17%;width:3px;height:3px;animation-duration:44s;animation-delay:-19s"></i><i style="left:29%;width:5px;height:5px;animation-duration:38s;animation-delay:-27s"></i><i style="left:43%;width:3px;height:3px;animation-duration:50s;animation-delay:-9s"></i><i style="left:56%;width:4px;height:4px;animation-duration:41s;animation-delay:-33s"></i><i style="left:67%;width:6px;height:6px;animation-duration:46s;animation-delay:-15s"></i><i style="left:78%;width:3px;height:3px;animation-duration:36s;animation-delay:-23s"></i><i style="left:91%;width:4px;height:4px;animation-duration:52s;animation-delay:-7s"></i></div><div class="glow" id="glow"></div><div class="noise"></div>
 
 <header id="hdr"><div class="wrap"><nav>
   <a class="brand" href="#top"><img src="assets/aegir-logo.png" alt="Aegir Co." width="300" height="264" decoding="async"><b>AEGIR <i>CO.</i></b></a>
@@ -409,9 +427,9 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px}
 </div></div></section>
 
 <div class="waves" aria-hidden="true">
-  <svg class="s1" viewBox="0 0 2400 110" preserveAspectRatio="none">
+  <svg class="s1" data-par=".07" viewBox="0 0 2400 110" preserveAspectRatio="none">
     <path d="M0,64 C150,26 250,102 400,64 C550,26 650,102 800,64 C950,26 1050,102 1200,64 C1350,26 1450,102 1600,64 C1750,26 1850,102 2000,64 C2150,26 2250,102 2400,64"/></svg>
-  <svg class="s2" viewBox="0 0 2400 110" preserveAspectRatio="none">
+  <svg class="s2" data-par="-.04" viewBox="0 0 2400 110" preserveAspectRatio="none">
     <path d="M0,82 C200,46 300,110 500,82 C700,54 800,110 1000,82 C1200,54 1300,110 1500,82 C1700,54 1800,110 2000,82 C2200,54 2300,110 2400,82"/></svg>
 </div>
 
@@ -468,8 +486,8 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px}
 
 <section id="servicos"><div class="wrap">
   <div class="head rv"><div class="eyebrow">Arsenal</div>
-    <h2>Do primeiro pixel<br>ao deploy final.</h2>
-    <p class="sub">Estratégia, design, código e publicação — ponta a ponta. Você fala com quem constrói, não com intermediário.</p></div>
+    <h2>Do primeiro commit<br>ao domínio no ar.</h2>
+    <p class="sub">Somos desenvolvedores: escrevemos o código, cuidamos do servidor e mantemos no ar. O design entra a serviço disso, não no lugar disso.</p></div>
   <div class="cards">
     <article class="card rv"><div class="ico"><svg viewBox="0 0 24 24"><path d="M3 5h18v14H3z"/><path d="M3 9h18M7 13h6"/></svg></div>
       <span class="idx">01</span>
@@ -497,7 +515,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px}
 <section id="forja"><div class="wrap">
   <div class="head rv"><div class="eyebrow">A forja</div>
     <h2>Simples de acompanhar.<br>Sério na execução.</h2>
-    <p class="sub">Quatro etapas claras, prazo combinado e você vendo o projeto tomar forma em tempo real.</p></div>
+    <p class="sub">Quatro etapas claras, prazo combinado e link de preview atualizado a cada push — você acompanha cada versão.</p></div>
   <div class="steps rv">
     <div class="step" data-step="01"><svg viewBox="0 0 24 26"><path d="M4 24L12 2l8 22M8 12h9"/></svg><b>CONVERSA INICIAL</b>
       <h3>Conversa</h3><p>Entendemos negócio, público e objetivo. Sem formulário frio — papo direto.</p></div>
@@ -507,6 +525,16 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px}
       <h3>Construção</h3><p>Design aprovado, ciclos curtos de desenvolvimento e link de preview sempre atualizado.</p></div>
     <div class="step" data-step="04"><svg viewBox="0 0 24 26"><path d="M6 24V2h8l5 5-5 5H6M14 12l5 12"/></svg><b>NO AR</b>
       <h3>Zarpada</h3><p>Deploy, domínio, medição e acompanhamento. A entrega é o começo, não o fim.</p></div>
+  </div>
+  <div class="term rv" data-par="-.05" aria-hidden="true">
+    <div class="term-bar"><i></i><i></i><i></i><span>aegir@deploy — travessia</span></div>
+    <pre><code><s>$</s> aegir build --projeto "cliente"
+<u>✓</u> escopo assinado, rota traçada
+<u>✓</u> 312 módulos empacotados <b>1.9s</b>
+<u>✓</u> lighthouse 98 · 100 · 100 · 100
+<s>$</s> aegir deploy --prod
+<u>✓</u> no ar em <b>aegirco.com</b> — 41s desde o commit
+<e>~</e> maré estável, profundidade 0 erros</code></pre>
   </div>
 </div></section>
 
@@ -636,6 +664,21 @@ if(matchMedia('(pointer:fine)').matches){
       pending=false;
     });
   },{passive:true});
+}
+
+const pars=[...document.querySelectorAll('[data-par]')];
+if(pars.length&&!matchMedia('(prefers-reduced-motion:reduce)').matches){
+  let pq=false;
+  const move=()=>{
+    const mid=innerHeight/2;
+    pars.forEach(el=>{
+      const r=el.getBoundingClientRect(),k=parseFloat(el.dataset.par)||0;
+      el.style.transform='translate3d(0,'+((mid-(r.top+r.height/2))*k).toFixed(1)+'px,0)';
+    });
+    pq=false;
+  };
+  addEventListener('scroll',()=>{if(!pq){pq=true;requestAnimationFrame(move)}},{passive:true});
+  addEventListener('resize',move,{passive:true});move();
 }
 
 const deep=document.querySelector('.deep'),deepArt=document.getElementById('deepArt'),
