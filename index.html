@@ -46,10 +46,8 @@ h1,h2,h3{font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.04;lette
   animation:sway 58s ease-in-out infinite}
 @keyframes sway{0%,100%{transform:translate3d(-4vw,0,0)}50%{transform:translate3d(5vw,3vh,0)}}
 .depth{position:fixed;inset:0;z-index:-1;pointer-events:none;
-  background-image:linear-gradient(180deg,rgba(126,178,205,.12) 0%,rgba(20,58,96,.18) 14%,transparent 40%,
-    rgba(2,8,18,.5) 74%,rgba(1,4,10,.88) 100%);
-  background-size:100% 240%;background-repeat:no-repeat;
-  background-position:0 calc(var(--dp,0) * 100%)}
+  background:linear-gradient(180deg,rgba(126,178,205,.06) 0%,rgba(20,58,96,.1) 22%,
+    rgba(3,10,20,.18) 62%,rgba(1,4,10,.42) 100%)}
 .motes{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
 .motes i{position:absolute;bottom:-24px;border-radius:50%;opacity:.5;
   background:radial-gradient(circle at 34% 30%,rgba(255,255,255,.4),rgba(160,205,225,.1) 55%,transparent 72%);
@@ -652,15 +650,13 @@ else{
    if(sel)document.querySelectorAll(sel).forEach(e=>e.style.display='none');
  });}
 
-const hdr=document.getElementById('hdr'),prog=document.getElementById('prog'),depthEl=document.getElementById('depth');
+const hdr=document.getElementById('hdr'),prog=document.getElementById('prog');
 let tick=false,maxScroll=1;
 const measure=()=>{maxScroll=Math.max(document.documentElement.scrollHeight-innerHeight,1)};
 measure();addEventListener('resize',measure,{passive:true});addEventListener('load',measure);
 addEventListener('scroll',()=>{
   if(tick)return;tick=true;
   requestAnimationFrame(()=>{
-    const prog01=scrollY/Math.max(document.documentElement.scrollHeight-innerHeight,1);
-    depthEl&&depthEl.style.setProperty('--dp',prog01.toFixed(4));
     hdr.classList.toggle('on',scrollY>24);
     prog.style.transform='scaleX('+(scrollY/maxScroll)+')';
     tick=false;
