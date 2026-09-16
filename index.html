@@ -413,8 +413,8 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px}
   .mob a{font-size:23px}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-.lite *{animation:none!important}
-.lite .motes,.lite .bubbles,.lite .noise{display:none}
+.lite .motes,.lite .noise{display:none}
+.lite .beam{animation:none}
 .lite header.on{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(4,6,12,.96)}
 .lite .deep-layer,.lite .drift{transform:none!important}
 </style>
@@ -640,20 +640,25 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px}
 
 <script>
 const root=document.documentElement;
-let LITE=(navigator.hardwareConcurrency||8)<=4||(navigator.deviceMemory||8)<=4;
+let LITE=(navigator.deviceMemory||8)<=2;
 if(LITE)root.classList.add('lite');
 else{
-  let slow=0,seen=0,last=0,until=0;
+  // degrada só com lentidão sustentada: janela de 90 quadros com mediana acima de 34ms.
+  // picos isolados (decodificar imagem, trocar de aba, carregar fonte) não contam.
+  const win=[];let last=0,armed=false,n=0;
   const probe=t=>{
-    if(last){seen++;if(t-last>40)slow++}
+    if(last){const dt=t-last;if(dt<250){win.push(dt);if(win.length>90)win.shift()}}
     last=t;
-    if(slow>=10){LITE=true;root.classList.add('lite');return}
-    if(seen<400&&t<until)requestAnimationFrame(probe);
+    if(++n>600){armed=false;return}
+    if(win.length===90){
+      const med=[...win].sort((a,b)=>a-b)[45];
+      if(med>34){LITE=true;root.classList.add('lite');return}
+    }
+    if(!document.hidden)requestAnimationFrame(probe);else{armed=false;last=0}
   };
-  addEventListener('scroll',function once(){
-    removeEventListener('scroll',once);
-    until=performance.now()+6000;last=0;requestAnimationFrame(probe);
-  },{passive:true,once:true});
+  const arm=()=>{if(!armed&&!LITE){armed=true;last=0;n=0;win.length=0;requestAnimationFrame(probe)}};
+  addEventListener('scroll',arm,{passive:true,once:true});
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)arm()});
 }
 
 // diagnóstico: ?off=depth,motes,bg,noise,waves,term desliga camadas para isolar artefatos
